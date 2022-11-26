@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "ms-dotnettools.csharp",
+    "ionide.ionide-fsharp",
+    "ionide.ionide-paket",
+    "ionide.ionide-fake"
+  ]
+}
