@@ -1,8 +1,11 @@
 {
   "recommendations": [
-    "ms-dotnettools.csharp",
-    "ionide.ionide-fsharp",
-    "ionide.ionide-paket",
-    "ionide.ionide-fake"
+    "github.copilot",
+    "github.codespaces",
+    "ms-vscode-remote.remote-containers",
+    "eamodio.gitlens",
+    "vscodevim.vim",
+    "dart-code.dart-code",
+    "dart-code.flutter"
   ]
 }
