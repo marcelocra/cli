@@ -33,9 +33,9 @@ RUN apt-get update
 RUN apt-get install --no-install-recommends -y -q gnupg2 curl git ca-certificates apt-transport-https openssh-client 
 RUN wget -qO- https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/dart.gpg 
 # Fix the following 
-RUN echo 'deb [signed-by=/usr/share/keyrings/dart.gpg arch=amd64] https://storage.googleapis.com/download.dartlang.org/linux/debian stable main' | sudo tee /etc/apt/sources.list.d/dart_stable.list
-RUN echo 'deb [signed-by=/usr/share/keyrings/dart.gpg arch=amd64] https://storage.googleapis.com/download.dartlang.org/linux/debian testing main' | sudo tee /etc/apt/sources.list.d/dart_testing.list
-RUN echo 'deb [signed-by=/usr/share/keyrings/dart.gpg arch=amd64] https://storage.googleapis.com/download.dartlang.org/linux/debian unstable main' | sudo tee /etc/apt/sources.list.d/dart_unstable.list
+RUN echo 'deb [signed-by=/usr/share/keyrings/dart.gpg arch=amd64] https://storage.googleapis.com/download.dartlang.org/linux/debian stable main' | tee /etc/apt/sources.list.d/dart_stable.list
+RUN echo 'deb [signed-by=/usr/share/keyrings/dart.gpg arch=amd64] https://storage.googleapis.com/download.dartlang.org/linux/debian testing main' | tee /etc/apt/sources.list.d/dart_testing.list
+RUN echo 'deb [signed-by=/usr/share/keyrings/dart.gpg arch=amd64] https://storage.googleapis.com/download.dartlang.org/linux/debian unstable main' | tee /etc/apt/sources.list.d/dart_unstable.list
 RUN apt-get update
 # 'unstable' for dev, 'testing' for beta, 'stable' for stable, remove the '-t' for latest.
 RUN apt-get -t testing install -y dart
