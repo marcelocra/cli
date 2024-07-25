@@ -1,1 +1,7 @@
-Dockerfile linguist-vendored
+# Linguist examples
+# -----------------
+# linguist-detectable        languages.yml         Included in stats, even if language's type is data or prose
+# linguist-documentation     documentation.yml     Excluded from stats
+# linguist-generated         generated.rb          Excluded from stats, hidden in diffs
+# linguist-language=name     languages.yml         Highlighted and classified as name
+# linguist-vendored          vendor.yml            Excluded from stats

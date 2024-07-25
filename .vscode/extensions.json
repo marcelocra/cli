@@ -1,12 +1,11 @@
 {
   "recommendations": [
-    "github.copilot",
-    "github.codespaces",
-    "ms-vscode-remote.remote-containers",
-    "eamodio.gitlens",
-    "vscodevim.vim",
+    "esbenp.prettier-vscode",
+    "editorconfig.editorconfig",
+    "ionide.ionide-fsharp",
+    "ionide.ionide-fake",
+    "ionide.ionide-paket",
     "dart-code.dart-code",
-    "dart-code.flutter",
-    "esbenp.prettier-vscode"
+    "dart-code.flutter"
   ]
 }

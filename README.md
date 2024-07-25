@@ -1,5 +1,7 @@
-# cli summary information
+# `cli`
 
-This file works as a pointer to other relevant files, most of which will be in the [docs](./docs/) folder.
+> _Integrate with and simplify the command line usage: rename some functions, create files from templates, generate projects, etc._
 
-- [The roadmap](./docs/ROADMAP.md)
+Our goal is not to replace the shell or its very useful and readily available programs.
+
+We want to augment it, either by adding unavailable functionality or by simplifying what can already be done (perhaps surfacing it better to ourselves and other users).

@@ -1,4 +1,4 @@
-# App roadmap with details about what's coming next
+# Changelog
 
 ## Now - will be in the next release
 
@@ -6,6 +6,6 @@
 
 ## Done - completed work
 
-### 0.0.1
+### 0.1.0
 
 - Initial version!

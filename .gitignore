@@ -1,2 +1,41 @@
-.cljs_node_repl/
+# Clojure and ClojureScript stuff.
 
+
+public/js
+/target
+/checkouts
+/src/gen
+pom.xml
+pom.xml.asc
+*.iml
+*.jar
+*.log
+.shadow-cljs
+.idea
+.lein-*
+.nrepl-*
+.DS_Store
+.hgignore
+.hg/
+.calva/
+.clj-kondo/
+.lsp/
+.nrepl-port
+.cpcache/
+.rebel_readline_history
+out/
+
+
+
+# JavaScript stuff.
+
+
+node_modules/
+.env
+
+
+
+# F# stuff.
+
+
+.fake
