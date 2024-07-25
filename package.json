@@ -27,6 +27,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "PACKAGE_REPO_URL"
+    "url": "https//github.com/marcelocra/cli"
   }
 }
