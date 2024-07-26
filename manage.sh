@@ -91,17 +91,27 @@ while [ $# -gt 0 ]; do
 
 
         commitlint)
-            echo 'See full docs here:'
+
+            echo 'See full commitlint docs here:'
             echo '  https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional'
             echo
-            echo 'Steps:'
-            echo '1) npm init -y'
-            echo '2) npm install --save-dev @commitlint/{cli,config-conventional}'
-            echo '3) echo "export default {extends: ['@commitlint/config-conventional']};" > commitlint.config.js'
-            echo '4) npm install --save-dev husky'
-            echo '5) npx husky init'
-            echo '6) echo "npx --no -- commitlint --edit \$1" > .husky/commit-msg'
-            echo '7) [optional] To test: npx commitlint --from HEAD~1 --to HEAD --verbose'
+
+            if [ -f "./package.json" ]; then
+                echo 'Folder already contains a package.json file. Skipping npm init.'
+            else
+                npm init -y
+            fi
+
+            echo 'Installing commitlint and husky as development dependencies...'
+            npm install --save-dev @commitlint/{cli,config-conventional} husky
+
+            echo 'Creating commitlint config and husky hooks...'
+            echo "export default {extends: ['@commitlint/config-conventional']};" > commitlint.config.js
+            npx husky init
+            echo "npx --no -- commitlint --edit \$1" > .husky/commit-msg
+
+            echo 'Run the following, to test your setup if you already have commited something:'
+            echo '  npx commitlint --from HEAD~1 --to HEAD --verbose'
             echo
 
             ;;
