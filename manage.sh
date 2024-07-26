@@ -71,6 +71,25 @@ while [ $# -gt 0 ]; do
             ;;
 
 
+        fsharp)
+
+            if [ -z "$2" ]; then
+                fatal 'Please, provide a name for the project: fsharp <project-name>'
+            fi
+
+            echo 'Creating a new fsharp F# project...'
+            dotnet new console -lang F#
+
+            echo 'Adding gitignore and fantomas...'
+            dotnet new gitignore
+            dotnet new tool-manifest
+            dotnet tool install fantomas
+
+            echo 'Done!'
+
+            ;;
+
+
         commitlint)
             echo 'See full docs here:'
             echo '  https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional'
