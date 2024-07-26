@@ -1,10 +1,20 @@
 # Changelog
 
-## Now - will be in the next release
+## Now
 
-## Next - will be done later
+Stuff that we plan to do this release.
 
-## Done - completed work
+## Next
+
+Stuff that we plan to do in the next few releases.
+
+## Backlog
+
+Stuff that we plan to do in the future.
+
+## Done
+
+Completed work.
 
 ### 0.1.0
 
