@@ -20,13 +20,17 @@ if [ ! -f "$MCRA_BIN/cli" ]; then
     install_this_file() {
         local should_install_this="no"
 
-        echo 'This file is not installed. Install? (symlink this script to ~/bin/cli)'
+        echo "This file is not installed. Install? (will symlink this script to $MCRA_BIN/cli)"
         read -p 'y/N ' should_install_this
 
         if [ "$should_install_this" = "y" ]; then
             echo 'Yes! Installing...'
-            echo $this_file $MCRA_BIN/cli
-            ln -s "$this_file" "$MCRA_BIN/cli" || fatal "Symlink failed. Check output"
+            if [ ! -d "$MCRA_BIN" ]; then
+                mkdir "$MCRA_BIN" || fatal "Failed to create '$MCRA_BIN'"
+            fi
+
+            ln -s "$this_file" "$MCRA_BIN/cli" || fatal 'Symlink failed. Check output'
+
             echo 'Done!'
         else
             echo 'Not installing.'
@@ -53,6 +57,7 @@ usage() {
     echo '- commitlint: setup commit linting with husky and conventional commits'
     echo '- pandoc: print a pandoc man example command, with groff'
     echo '- common: edit shell helpers'
+    echo '- commonp: edit personal shell helpers'
     echo '- dartjs: compile dart to js with level 2 of optimizations'
     echo '- dotnet-publish: create a release self contained binary of a dotnet project'
     echo '- compare-compilations: compare the binary size of hello world programs'
@@ -79,7 +84,7 @@ main() {
 
             e|edit|-e|--edit)
 
-                $editor $this_file
+                (cd $this_file_directory && $editor $this_file)
 
                 ;;
 
@@ -162,7 +167,15 @@ main() {
 
             common)
 
-                $editor $shell_helpers
+                (cd "$(mm_dir_path $shell_helpers)" && $editor $shell_helpers)
+
+                ;;
+
+
+            commonp)
+
+                local filename="$MCRA_BIN/commonp.sh"
+                (cd "$(mm_dir_path $filename)" && $editor $filename)
 
                 ;;
 
