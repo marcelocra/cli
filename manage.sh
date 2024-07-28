@@ -3,7 +3,7 @@
 # manage.sh - Script to manage the project.
 #
 
-. $MCRA_BIN/.rc.common
+. $HOME/bin/.rc.common
 this_file="$(mm_file_path "$0")"
 this_file_directory="$(mm_dir_path "$this_file")"
 
@@ -46,7 +46,15 @@ usage() {
     echo '- edit: edit this file (alias: e, -e, --edit)'
     echo '- cron: open crontab file'
     echo '- commitlint: setup commit linting with husky and conventional commits'
+    echo '- pandoc: print a pandoc man example command, with groff'
 }
+
+# Go to this script folder, mostly useful for checking stuff.
+if [ $# -eq 0 ]; then
+    cd $this_file_directory
+    echo '\nHit ctrl+d to return to the other directory'
+    $SHELL
+fi
 
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -113,6 +121,27 @@ while [ $# -gt 0 ]; do
             echo 'Run the following, to test your setup if you already have commited something:'
             echo '  npx commitlint --from HEAD~1 --to HEAD --verbose'
             echo
+
+            ;;
+
+
+        pandoc)
+
+            mm_trim '
+                To create a manpage, check out the code below or follow the
+                full tutorial here:
+
+                    https://gpanders.com/blog/write-your-own-man-pages/
+
+                pandoc --standalone \
+                    --from markdown \
+                    --to man \
+                    --metadata title="pandoc example" \
+                    --metadata author="marcelo" \
+                    --metadata section="the section name" \
+                    --metadata date="$(date +%F_%T -r stuff.md)" \
+                    stuff.md | groff -T utf8 -man | nvim "+Man!"
+            ' 12
 
             ;;
 
