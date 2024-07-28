@@ -3,7 +3,11 @@
 # manage.sh - Script to manage the project.
 #
 
-. $HOME/bin/.rc.common
+# Load shell helpers.
+shell_helpers="$HOME/bin/.rc.common"
+. $shell_helpers
+
+# Start using them.
 this_file="$(mm_file_path "$0")"
 this_file_directory="$(mm_dir_path "$this_file")"
 
@@ -47,6 +51,7 @@ usage() {
     echo '- cron: open crontab file'
     echo '- commitlint: setup commit linting with husky and conventional commits'
     echo '- pandoc: print a pandoc man example command, with groff'
+    echo '- common: edit shell helpers'
 }
 
 # Go to this script folder, mostly useful for checking stuff.
@@ -55,6 +60,8 @@ if [ $# -eq 0 ]; then
     echo '\nHit ctrl+d to return to the other directory'
     $SHELL
 fi
+
+editor="${EDITOR:-vi}"
 
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -67,7 +74,7 @@ while [ $# -gt 0 ]; do
 
         e|edit|-e|--edit)
 
-            $EDITOR $this_file
+            $editor $this_file
 
             ;;
 
@@ -142,6 +149,21 @@ while [ $# -gt 0 ]; do
                     --metadata date="$(date +%F_%T -r stuff.md)" \
                     stuff.md | groff -T utf8 -man | nvim "+Man!"
             ' 12
+
+            ;;
+
+
+        common)
+
+            $editor $shell_helpers
+
+            ;;
+
+
+        next_case_here)
+
+            echo '\nA placeholder for the next case.'
+            return 1
 
             ;;
 
