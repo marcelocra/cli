@@ -1,21 +1,27 @@
 #!/usr/bin/env sh
+# vim:fdm=marker:fmr={{{,}}}:fdl=0:fen:
 #
 # manage.sh - Script to manage the project.
 #
+
+# ------------------------------------------------------------------------------
+# Load shell helpers, define constans and install this file.
+#
+# Code below. {{{
+
 
 # Load shell helpers.
 shell_helpers="$HOME/bin/.rc.common"
 . $shell_helpers
 
-# Start using them.
+
+# Define file constants.
 this_file="$(mm_file_path "$0")"
 this_file_directory="$(mm_dir_path "$this_file")"
 
 
-
-# If this file is not installed, ask the user to install it.
-
-
+# Check if this file is installed to $MCRA_BIN (default: $HOME/bin) and if not,
+# ask the user to install it.
 if [ ! -f "$MCRA_BIN/cli" ]; then
     install_this_file() {
         local should_install_this="no"
@@ -41,10 +47,7 @@ if [ ! -f "$MCRA_BIN/cli" ]; then
 fi
 
 
-
-# Process command line arguments.
-
-
+# All commands should be add here, along with description of how to use them.
 usage() {
     echo "Usage: $0 [commands]"
     echo
@@ -70,33 +73,37 @@ if [ $# -eq 0 ]; then
     $SHELL
 fi
 
+
+# }}}
+# ------------------------------------------------------------------------------
+
+
+
+# Parses cli arguments and run the selected commands. Note that all functions
+# should be defined inside the command case statement, to avoid mixing one
+# command with the other.
 main() {
     local editor="${EDITOR:-vi}"
 
+    # Process command line arguments.
     while [ $# -gt 0 ]; do
         case "$1" in
-            -h|--help|"")
+            -h|--help|"") # {{{
 
                 usage
 
-                ;;
-
-
-            e|edit|-e|--edit)
+                ;; # }}}
+            e|edit|-e|--edit) # {{{
 
                 (cd $this_file_directory && $editor $this_file)
 
-                ;;
-
-
-            cron)
+                ;; # }}}
+            cron) # {{{
 
                 crontab -e
 
-                ;;
-
-
-            fsharp)
+                ;; # }}}
+            fsharp) # {{{
 
                 if [ -z "$2" ]; then
                     fatal 'Please, provide a name for the project: fsharp <project-name>'
@@ -114,10 +121,8 @@ main() {
                 echo 'Done!'
                 return 0
 
-                ;;
-
-
-            commitlint)
+                ;; # }}}
+            commitlint) # {{{
 
                 echo 'See full commitlint docs here:'
                 echo '  https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional'
@@ -141,10 +146,8 @@ main() {
                 echo '  npx commitlint --from HEAD~1 --to HEAD --verbose'
                 echo
 
-                ;;
-
-
-            pandoc)
+                ;; # }}}
+            pandoc) # {{{
 
                 mm_trim '
                     To create a manpage, check out the code below or follow the
@@ -162,25 +165,19 @@ main() {
                         stuff.md | groff -T utf8 -man | nvim "+Man!"
                 ' 12
 
-                ;;
-
-
-            common)
+                ;; # }}}
+            common) # {{{
 
                 (cd "$(mm_dir_path $shell_helpers)" && $editor $shell_helpers)
 
-                ;;
-
-
-            commonp)
+                ;; # }}}
+            commonp) # {{{
 
                 local filename="$MCRA_BIN/commonp.sh"
                 (cd "$(mm_dir_path $filename)" && $editor $filename)
 
-                ;;
-
-
-            dart)
+                ;; # }}}
+            dart) # {{{
 
                 local filename="${3:-main}"
 
@@ -226,18 +223,14 @@ main() {
 
                 return $?
 
-                ;;
-
-
-            dotnet-publish)
+                ;; # }}}
+            dotnet-publish) # {{{
 
                 dotnet publish -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained true
                 return $?
 
-                ;;
-
-
-            compare-compilations)
+                ;; # }}}
+            compare-compilations) # {{{
 
                 mm_trim '
 
@@ -257,22 +250,18 @@ main() {
 
                 return 0
 
-                ;;
-
-
-            next_case_here)
+                ;; # }}}
+            next_case_here) # {{{
 
                 echo '\nA placeholder for the next case.'
                 return 1
 
-                ;;
-
-
-            *)
+                ;; # }}}
+            *) # {{{
 
                 fatal "Unknown parameter passed: $1"
 
-                ;;
+                ;; # }}}
         esac
         shift
     done
