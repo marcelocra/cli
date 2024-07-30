@@ -77,13 +77,6 @@ usage() {
 }
 # }}}
 
-# Go to this script folder, mostly useful for checking stuff.
-if [ $# -eq 0 ]; then
-    cd $this_file_directory
-    echo '\nHit ctrl+d to return to the other directory'
-    $SHELL
-fi
-
 
 # }}}
 # ------------------------------------------------------------------------------
