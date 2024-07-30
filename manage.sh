@@ -4,13 +4,7 @@
 # manage.sh - Script to manage the project.
 #
 
-# ------------------------------------------------------------------------------
-# Load shell helpers, define constans and install this file.
-#
-# Code below. {{{
-
-
-# Load shell helpers. {{{
+# Load shell helpers, define constants, install this script. {{{
 shell_helpers="$HOME/bin/.rc.common"
 . $shell_helpers
 
@@ -48,7 +42,7 @@ fi
 # }}}
 
 
-# All commands should be add here, along with description of how to use them.{{{
+# All commands should be add here, along with description of how to use them.
 usage() {
     mm_trim "
     Usage: cli [command]
@@ -72,14 +66,17 @@ usage() {
             Install protocol buffers compiler. For details and more information,
             see the https://grpc.io/docs/protoc-installation/ page.
         - json-to-yaml: Convert a json file into yaml. Requires Deno.
+        - example-inline-script: Show how to create an inline script here.
     " 4
 
 }
-# }}}
 
 
-# }}}
-# ------------------------------------------------------------------------------
+if [ $# -eq 0 ]; then
+    usage
+    echo
+    fatal 'Invalid option'
+fi
 
 
 
@@ -304,6 +301,37 @@ main() {
 
                 return $?
 
+                ;; # }}}
+            example-inline-script) # {{{
+
+                # One-liner (of sorts... the command is in one line, not the
+                # script).
+                #
+                # Notice that the script could be in any language and we could
+                # run it with any command afterwards.
+                #
+                # I'm using 'EOF' to avoid variable substitution in the heredoc.
+                file_to_run="$(mktemp)" && cat <<'EOF' > $file_to_run && dart run $file_to_run
+import "dart:io";
+
+void main() async {
+    var dir = Directory('.');
+
+    try {
+        var dirList = dir.list();
+        await for (final FileSystemEntity f in dirList) {
+            if (f is File) {
+                print('Found file ${f.path}');
+            } else if (f is Directory) {
+                print('Found dir ${f.path}');
+            }
+        }
+    } catch (e) {
+        print(e.toString());
+    }
+}
+
+EOF
                 ;; # }}}
             next-case-here) # {{{
 
