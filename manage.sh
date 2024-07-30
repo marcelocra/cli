@@ -67,6 +67,11 @@ usage() {
             see the https://grpc.io/docs/protoc-installation/ page.
         - json-to-yaml: Convert a json file into yaml. Requires Deno.
         - example-inline-script: Show how to create an inline script here.
+        - install-python-typings:
+            Install mypy, to check Python files that use type hints. More
+            details in their GitHub page:
+                https://github.com/python/mypy
+        - mypy: Run Python typechecker.
     " 4
 
 }
@@ -333,13 +338,27 @@ void main() async {
 
 EOF
                 ;; # }}}
-            next-case-here) # {{{
+            install-python-typings) # {{{
 
-                echo '\nA placeholder for the next case.'
-                return 1
+                # The -U is for `upgrade`.
+                python3 -m pip install -U mypy || fatal 'Failed to install mypy'
+                return 0
 
                 ;; # }}}
-            *) # {{{
+            mypy) # {{{
+
+                case "$2" in
+                    *.py)
+                        mypy $2
+                        return $?
+                        ;;
+                    *)
+                        fatal '\nERROR. Please, provide a Python file.'
+                        ;;
+                esac
+
+                ;; # }}}
+            *) # Put the next command above this line. {{{
 
                 fatal "Unknown parameter passed: $1"
 
