@@ -10,7 +10,7 @@
 # Code below. {{{
 
 
-# Load shell helpers.
+# Load shell helpers. {{{
 shell_helpers="$HOME/bin/.rc.common"
 . $shell_helpers
 
@@ -45,26 +45,37 @@ if [ ! -f "$MCRA_BIN/cli" ]; then
 
     install_this_file
 fi
+# }}}
 
 
-# All commands should be add here, along with description of how to use them.
+# All commands should be add here, along with description of how to use them.{{{
 usage() {
-    echo "Usage: $0 [commands]"
-    echo
-    echo 'commands:'
-    echo
-    echo '- help: show this message'
-    echo '- edit: edit this file (alias: e, -e, --edit)'
-    echo '- cron: open crontab file'
-    echo '- fsharp: create an F# project preinstalled with Fantomas for source formatting'
-    echo '- commitlint: setup commit linting with husky and conventional commits'
-    echo '- pandoc: print a pandoc man example command, with groff'
-    echo '- common: edit shell helpers'
-    echo '- commonp: edit personal shell helpers'
-    echo '- dartjs: compile dart to js with level 2 of optimizations'
-    echo '- dotnet-publish: create a release self contained binary of a dotnet project'
-    echo '- compare-compilations: compare the binary size of hello world programs'
+    mm_trim "
+    Usage: cli [command]
+
+    Commands
+        - help: Show this message.
+        - edit: Edit this file (alias: e, -e, --edit).
+        - cron: Open crontab file.
+        - fsharp:
+            Create an F# project preinstalled with Fantomas for source
+            formatting.
+        - commitlint: Setup commit linting with husky and conventional commits.
+        - pandoc: Print a pandoc man example command, with groff.
+        - common: Edit shell helpers.
+        - commonp: Edit personal shell helpers.
+        - dartjs: Compile dart to js with level 2 of optimizations.
+        - dotnet-publish:
+            Create a release self contained binary of a dotnet project.
+        - compare-compilations: Compare the binary size of hello world programs.
+        - install-protoc:
+            Install protocol buffers compiler. For details and more information,
+            see the https://grpc.io/docs/protoc-installation/ page.
+        - json-to-yaml: Convert a json file into yaml. Requires Deno.
+    " 4
+
 }
+# }}}
 
 # Go to this script folder, mostly useful for checking stuff.
 if [ $# -eq 0 ]; then
@@ -88,7 +99,7 @@ main() {
     # Process command line arguments.
     while [ $# -gt 0 ]; do
         case "$1" in
-            -h|--help|"") # {{{
+            help|-h|--help|"") # {{{
 
                 usage
 
@@ -251,7 +262,57 @@ main() {
                 return 0
 
                 ;; # }}}
-            next_case_here) # {{{
+            install-protoc) # {{{
+
+                fatal_extra() {
+                    echo 'Updated instructions here:'
+                    echo '  https://grpc.io/docs/protoc-installation/'
+                    fatal "$1"
+                }
+
+                local pb_releases='https://github.com/protocolbuffers/protobuf/releases'
+                local protoc_version='27.2'
+                local protoc_zip_filename="protoc-$protoc_version-linux-x86_64.zip"
+                local protoc_zip_path="$pb_releases/download/v$protoc_version/$protoc_zip_filename"
+                local protoc_local_dir="$HOME/bin/binaries/protoc/v$protoc_version"
+                if [ ! -d "$protoc_local_dir" ]; then
+                    mkdir -p "$protoc_local_dir"
+                fi
+
+                curl -LO "$protoc_zip_path" || fatal_extra 'Failed to download protoc zip'
+                unzip $protoc_zip_filename -d $protoc_local_dir || fatal_extra 'Failed to extract protoc zip'
+
+                echo 'Symlinking to a location present in PATH...'
+                ln -s "$protoc_local_dir/bin/protoc" "$HOME/bin/protoc" \
+                    || fatal_extra "Symlink '$protoc_local_dir/bin/protoc' to a location in your PATH"
+
+                return 0
+
+                ;; # }}}
+            install-grpc-dart) # {{{
+
+                echo 'See details here:'
+                echo '  https://grpc.io/docs/languages/dart/quickstart/'
+                return 1
+
+                ;; # }}}
+            json-to-yaml) # {{{
+
+                if [ -z "$2" ] || [ -z "$3" ]
+                then
+                    fatal 'Usage: json-to-yaml <path to json> <path to yaml>'
+                fi
+
+                # File paths.
+                local json_input="$2"
+                local yaml_output="$3"
+
+                deno run --allow-read --allow-write "$this_file_directory/scripts/json-to-yaml.ts"  $json_input  "$yaml_output"
+
+                return $?
+
+                ;; # }}}
+            next-case-here) # {{{
 
                 echo '\nA placeholder for the next case.'
                 return 1

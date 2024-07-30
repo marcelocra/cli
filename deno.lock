@@ -1,0 +1,24 @@
+{
+  "version": "3",
+  "packages": {
+    "specifiers": {
+      "jsr:@std/yaml": "jsr:@std/yaml@1.0.0"
+    },
+    "jsr": {
+      "@std/yaml@1.0.0": {
+        "integrity": "06635c312121ee779e9eef4e9f49c1a26003b15da9ed1178037ccb91dc3a5129"
+      }
+    }
+  },
+  "remote": {},
+  "workspace": {
+    "packageJson": {
+      "dependencies": [
+        "npm:@commitlint/cli@^19.3.0",
+        "npm:@commitlint/config-conventional@^19.2.2",
+        "npm:husky@^9.1.1",
+        "npm:prettier@3.3.3"
+      ]
+    }
+  }
+}
