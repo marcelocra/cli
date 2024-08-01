@@ -361,15 +361,7 @@ EOF
                 ;; # }}}
             tsconfig) # {{{
 
-                mcra_npx() {
-                    if ! is_command npx; then
-                        fatal "'npx' is not installed."
-                    fi
-
-                    npx $@
-                }
-
-                mcra_npx tsc --init
+                npx --package=typescript@5.5.4 -- tsc --init
                 return $?
 
                 ;; # }}}
