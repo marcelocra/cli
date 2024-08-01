@@ -72,6 +72,7 @@ usage() {
             details in their GitHub page:
                 https://github.com/python/mypy
         - mypy: Run Python typechecker.
+        - tsconfig: Create a new tsconfig files in the current directory.
     " 4
 
 }
@@ -356,6 +357,20 @@ EOF
                         fatal '\nERROR. Please, provide a Python file.'
                         ;;
                 esac
+
+                ;; # }}}
+            tsconfig) # {{{
+
+                mcra_npx() {
+                    if ! is_command npx; then
+                        fatal "'npx' is not installed."
+                    fi
+
+                    npx $@
+                }
+
+                mcra_npx tsc --init
+                return $?
 
                 ;; # }}}
             *) # Put the next command above this line. {{{
