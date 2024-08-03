@@ -49,7 +49,8 @@ usage() {
 
     Commands
         - help: Show this message.
-        - edit: Edit this file (alias: e, -e, --edit).
+        - edit: Edit this file using $EDITOR (alias: e, -e, --edit).
+        - code: Edit this file using VSCode
         - cron: Open crontab file.
         - fsharp:
             Create an F# project preinstalled with Fantomas for source
@@ -66,7 +67,10 @@ usage() {
             Install protocol buffers compiler. For details and more information,
             see the https://grpc.io/docs/protoc-installation/ page.
         - json-to-yaml: Convert a json file into yaml. Requires Deno.
-        - example-inline-script: Show how to create an inline script here.
+        - example-inline-dart-program:
+            Show how to create an inline dart program. This works for any
+            programming language.
+        - example-inline-python-script:
         - install-python-typings:
             Install mypy, to check Python files that use type hints. More
             details in their GitHub page:
@@ -95,23 +99,19 @@ main() {
     # Process command line arguments.
     while [ $# -gt 0 ]; do
         case "$1" in
-            help|-h|--help|"") # {{{
-
+            help|""|-h|--help) #{{{
                 usage
-
-                ;; # }}}
-            e|edit|-e|--edit) # {{{
-
+                ;; #}}}
+            e|edit|-e|--edit) #{{{
                 (cd $this_file_directory && $editor $this_file)
-
-                ;; # }}}
-            cron) # {{{
-
+                ;; #}}}
+            code) #{{{
+                (cd $this_file_directory && code .)
+                ;; #}}}
+            cron) #{{{
                 crontab -e
-
-                ;; # }}}
-            fsharp) # {{{
-
+                ;; #}}}
+            fsharp) #{{{
                 if [ -z "$2" ]; then
                     fatal 'Please, provide a name for the project: fsharp <project-name>'
                 fi
@@ -127,10 +127,8 @@ main() {
 
                 echo 'Done!'
                 return 0
-
-                ;; # }}}
-            commitlint) # {{{
-
+                ;; #}}}
+            commitlint) #{{{
                 echo 'See full commitlint docs here:'
                 echo '  https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional'
                 echo
@@ -152,10 +150,8 @@ main() {
                 echo 'Run the following, to test your setup if you already have commited something:'
                 echo '  npx commitlint --from HEAD~1 --to HEAD --verbose'
                 echo
-
-                ;; # }}}
-            pandoc) # {{{
-
+                ;; #}}}
+            pandoc) #{{{
                 mm_trim '
                     To create a manpage, check out the code below or follow the
                     full tutorial here:
@@ -171,21 +167,15 @@ main() {
                         --metadata date="$(date +%F_%T -r stuff.md)" \
                         stuff.md | groff -T utf8 -man | nvim "+Man!"
                 ' 12
-
-                ;; # }}}
-            common) # {{{
-
+                ;; #}}}
+            common) #{{{
                 (cd "$(mm_dir_path $shell_helpers)" && $editor $shell_helpers)
-
-                ;; # }}}
-            commonp) # {{{
-
+                ;; #}}}
+            commonp) #{{{
                 local filename="$MCRA_BIN/commonp.sh"
                 (cd "$(mm_dir_path $filename)" && $editor $filename)
-
-                ;; # }}}
-            dart) # {{{
-
+                ;; #}}}
+            dart) #{{{
                 local filename="${3:-main}"
 
                 case "$2" in
@@ -207,38 +197,22 @@ main() {
                         ;;
 
                     js)
-
                         dart compile js -o $filename.js $filename.dart
-
                         ;;
-
-
                     jsopt)
-
                         dart compile js ${3:--O2} -o $filename.js $filename.dart
-
                         ;;
-
-
                     exe|*)
-
                         dart compile exe -o $filename.exe $filename.dart
-
                         ;;
-
                 esac
-
                 return $?
-
-                ;; # }}}
-            dotnet-publish) # {{{
-
+                ;; #}}}
+            dotnet-publish) #{{{
                 dotnet publish -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained true
                 return $?
-
-                ;; # }}}
-            compare-compilations) # {{{
-
+                ;; #}}}
+            compare-compilations) #{{{
                 mm_trim '
 
                     Creating the same program that would simply print "hello
@@ -254,12 +228,9 @@ main() {
                                 - PublishTrimmed=false: 68M
                                 - PublishTrimmed=true:  14M
                 ' 12
-
                 return 0
-
-                ;; # }}}
-            install-protoc) # {{{
-
+                ;; #}}}
+            install-protoc) #{{{
                 fatal_extra() {
                     echo 'Updated instructions here:'
                     echo '  https://grpc.io/docs/protoc-installation/'
@@ -283,17 +254,13 @@ main() {
                     || fatal_extra "Symlink '$protoc_local_dir/bin/protoc' to a location in your PATH"
 
                 return 0
-
-                ;; # }}}
-            install-grpc-dart) # {{{
-
+                ;; #}}}
+            install-grpc-dart) #{{{
                 echo 'See details here:'
                 echo '  https://grpc.io/docs/languages/dart/quickstart/'
                 return 1
-
-                ;; # }}}
-            json-to-yaml) # {{{
-
+                ;; #}}}
+            json-to-yaml) #{{{
                 if [ -z "$2" ] || [ -z "$3" ]
                 then
                     fatal 'Usage: json-to-yaml <path to json> <path to yaml>'
@@ -306,47 +273,71 @@ main() {
                 deno run --allow-read --allow-write "$this_file_directory/scripts/json-to-yaml.ts"  $json_input  "$yaml_output"
 
                 return $?
+                ;; #}}}
+            example-inline-dart-program) #{{{
+                # See the help for details.
 
-                ;; # }}}
-            example-inline-script) # {{{
-
-                # One-liner (of sorts... the command is in one line, not the
-                # script).
-                #
-                # Notice that the script could be in any language and we could
-                # run it with any command afterwards.
-                #
                 # I'm using 'EOF' to avoid variable substitution in the heredoc.
-                file_to_run="$(mktemp)" && cat <<'EOF' > $file_to_run && dart run $file_to_run
+                local file_to_run="$(mktemp)" && cat <<'EOF' > $file_to_run && dart run $file_to_run
 import "dart:io";
 
 void main() async {
     var dir = Directory('.');
 
-    try {
-        var dirList = dir.list();
-        await for (final FileSystemEntity f in dirList) {
-            if (f is File) {
-                print('Found file ${f.path}');
-            } else if (f is Directory) {
-                print('Found dir ${f.path}');
-            }
-        }
-    } catch (e) {
-        print(e.toString());
+    var dirList = dir.list();
+    await for (final FileSystemEntity f in dirList) {
+        print(f.path);
     }
+
+    // // If error handling is desirable, wrap the code in a try-catch block, as
+    // // demonstrated below.
+    // try {
+    //     var dirList = dir.list();
+    //     await for (final FileSystemEntity f in dirList) {
+    //         if (f is File) {
+    //             print('Found file ${f.path}');
+    //         } else if (f is Directory) {
+    //             print('Found dir ${f.path}');
+    //         }
+    //     }
+    // } catch (e) {
+    //     print(e.toString());
+    // }
 }
 
 EOF
-                ;; # }}}
-            install-python-typings) # {{{
+                ;; #}}}
+            example-inline-python-script) #{{{
+                local file_to_run="$(mktemp)" && cat <<'EOF' > $file_to_run && python3 $file_to_run
+import os
+
+def main():
+    cwd = os.getcwd()
+    fs = os.listdir(cwd)
+    print('\n'.join(fs))
+
+    # # One line version.
+    # [print(f) for f in sorted(os.listdir(os.getcwd()))]
+
+    # # If error handling is desirable, wrap the code in a try-catch block, as
+    # # demonstrated below.
+    # try:
+    #     for f in fs:
+    #         print(f)
+    # except Exception as e:
+    #     print(e)
+
+if __name__ == '__main__':
+    main()
+EOF
+                ;; #}}}
+            install-python-typings) #{{{
 
                 # The -U is for `upgrade`.
                 python3 -m pip install -U mypy || fatal 'Failed to install mypy'
                 return 0
-
-                ;; # }}}
-            mypy) # {{{
+                ;; #}}}
+            mypy) #{{{
 
                 case "$2" in
                     *.py)
@@ -358,18 +349,19 @@ EOF
                         ;;
                 esac
 
-                ;; # }}}
-            tsconfig) # {{{
+                ;; #}}}
+            tsconfig) #{{{
 
                 npx --package=typescript@5.5.4 -- tsc --init
                 return $?
 
-                ;; # }}}
-            *) # Put the next command above this line. {{{
+                ;; #}}}
+            *) #{{{
+                # Put the next command above this line.
 
                 fatal "Unknown parameter passed: $1"
 
-                ;; # }}}
+                ;; #}}}
         esac
         shift
     done
