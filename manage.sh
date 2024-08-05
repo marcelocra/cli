@@ -66,7 +66,9 @@ usage() {
         - install-protoc:
             Install protocol buffers compiler. For details and more information,
             see the https://grpc.io/docs/protoc-installation/ page.
-        - json-to-yaml: Convert a json file into yaml. Requires Deno.
+        - json-yaml:
+            Convert a json file into yaml and vice versa, depending on the input
+            and output file extensions. Require Deno.
         - example-inline-dart-program:
             Show how to create an inline dart program. This works for any
             programming language.
@@ -260,10 +262,10 @@ main() {
                 echo '  https://grpc.io/docs/languages/dart/quickstart/'
                 return 1
                 ;; #}}}
-            json-to-yaml) #{{{
+            json-yaml) #{{{
                 if [ -z "$2" ] || [ -z "$3" ]
                 then
-                    fatal 'Usage: json-to-yaml <path to json> <path to yaml>'
+                    fatal 'Usage: json-yaml <file 1> <file 2> (files should be .json or .yaml)'
                 fi
 
                 # File paths.
