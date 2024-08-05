@@ -5,8 +5,8 @@
 
 import { execSync } from "node:child_process";
 import fs from "node:fs";
-import path from "node:path";
 import process from "node:process";
+import { execTrim, getTemplate } from "./_helpers.js";
 
 //
 //
@@ -29,21 +29,7 @@ const devDependencies = [
 ];
 
 // Kept as reference. To be installed if required.
-const extraDevDependencies = ["@types/shelljs", "shelljs", "shx", "zx"];
-
-// Get config templates from the templates folder.
-const __filename = new URL(import.meta.url).pathname;
-const templatesPath = path.resolve(path.dirname(path.dirname(__filename)), "templates");
-
-//
-//
-// Helpers.
-//
-
-const getTemplate = (templateName: string) =>
-  fs.readFileSync(path.resolve(templatesPath, templateName), "utf8");
-
-const execTrim = (command: string) => execSync(command, { stdio: "pipe" }).toString().trim();
+// const extraDevDependencies = ["@types/shelljs", "shelljs", "shx", "zx"];
 
 //
 //

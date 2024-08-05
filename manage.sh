@@ -367,29 +367,8 @@ EOF
                 pnpm config set save-prefix=''
                 ;; #}}}
             add-tailwind) #{{{
-                npm install -D tailwindcss postcss autoprefixer @tailwindcss/typography daisyui@latest
-                npx tailwindcss init -p
-                cat <<'EOF' > tailwind.config.js
-import daisyui from "daisyui";
-import twTypography from "@tailwindcss/typography";
-
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  theme: {
-    extend: {},
-  },
-  plugins: [daisyui, twTypography],
-  daisyui: {
-    themes: ["dracula", "dark", "light"],
-  },
-};
-EOF
-                cat <<'EOF' > src/index.css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-EOF
+                ./scripts/add-tailwind.js
+                return $?
                 ;; #}}}
             *) #{{{
                 # Put the next command above this line.
