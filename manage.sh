@@ -357,18 +357,53 @@ EOF
 
                 ;; #}}}
             tsconfig) #{{{
-
                 npx --package=typescript@5.5.4 -- tsc --init
                 return $?
-
                 ;; #}}}
             node-save-prefix) #{{{
                 npm config set save-prefix=''
                 pnpm config set save-prefix=''
+                return $?
                 ;; #}}}
             add-tailwind) #{{{
                 ./scripts/add-tailwind.js
                 return $?
+                ;; #}}}
+            integrate-prettier-with-eslint) #{{{
+                # Install required packages.
+                npm i -D prettier-plugin-tailwindcss eslint-config-prettier eslint-config-google prettier @trivago/prettier-plugin-sort-imports
+
+                mm_trim "
+                    Add \"google\" to the .eslintrc \"extends\" property. Its
+                    priority is defined by its order in the array. Choose as you
+                    prefer.
+
+                    Then add \"prettier\" in the \"plugins\". Same idea applies.
+                " 16
+
+                mm_trim '
+                    Finally, add the following "prettier" object in the
+                    package.json:
+
+                        "prettier": {
+                            "importOrder": [
+                                "^(node|npm):",
+                                "^[p]react",
+                                "<THIRD_PARTY_MODULES>",
+                                "^@/(.*)$",
+                                "^[./]"
+                            ],
+                            "importOrderSeparation": true,
+                            "importOrderSortSpecifiers": true,
+                            "plugins": [
+                                "prettier-plugin-tailwindcss",
+                                "@trivago/prettier-plugin-sort-imports"
+                            ]
+                        }
+                ' 16
+
+                return $?
+
                 ;; #}}}
             *) #{{{
                 # Put the next command above this line.
