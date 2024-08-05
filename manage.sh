@@ -83,6 +83,9 @@ usage() {
             Saves npm/pnpm dependencies using exact version instead of variable
             versions (depending on ^ or ~).
         - add-tailwind: Adds TailwindCSS and DaisyUI to a project.
+        - new:
+            Expects a second argument, with the name of the file that should
+            be created. This file is copied from the 'root/templates'.
     " 4
 
 }
@@ -404,6 +407,53 @@ EOF
 
                 return $?
 
+                ;; #}}}
+            new) #{{{
+                local templates_dir="$this_file_directory/templates"
+                local template=''
+
+                case "$2" in
+                    gitattributes|gitattr)
+                        template='.gitattributes'
+                        ;;
+                    editorconfig|ec)
+                        template='.editorconfig'
+                        ;;
+                    eslintrc|eslint)
+                        template='.eslintrc.json'
+                        ;;
+                    prettierrc|prettier)
+                        template='.prettierrc.json'
+                        ;;
+                    changelog|cl)
+                        template='CHANGELOG.md'
+                        ;;
+                    license|lic)
+                        template='LICENSE.md'
+                        ;;
+                    license-apache|lic-apache|apache)
+                        template='LICENSE-apache.md'
+                        ;;
+                    *)
+                        mm_trim "
+                            Couldn't find a template for that. Available templates:
+
+                            (You can use the full name or the alias to create a file from them.)
+
+                            - gitattributes (gitatt)
+                            - editorconfig (ec)
+                            - eslintrc (eslint)
+                            - prettierrc (prettier)
+                            - changelog (cl)
+                            - license (lic)
+                            - license-apache (lic-apache, apache)
+                        " 24 && false
+                        return $?
+                        ;;
+                esac
+
+                cp "$templates_dir/$template" "$template"
+                return $?
                 ;; #}}}
             *) #{{{
                 # Put the next command above this line.

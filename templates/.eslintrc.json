@@ -1,4 +1,4 @@
 {
-  "extends": ["eslint:recommended", "google", "preact"],
+  "extends": ["eslint:recommended", "google"],
   "plugins": ["prettier"]
 }
