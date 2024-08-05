@@ -413,7 +413,7 @@ EOF
                 local template=''
 
                 case "$2" in
-                    gitattributes|gitattr)
+                    gitattributes|gita)
                         template='.gitattributes'
                         ;;
                     editorconfig|ec)
@@ -440,7 +440,7 @@ EOF
 
                             (You can use the full name or the alias to create a file from them.)
 
-                            - gitattributes (gitatt)
+                            - gitattributes (gita)
                             - editorconfig (ec)
                             - eslintrc (eslint)
                             - prettierrc (prettier)
