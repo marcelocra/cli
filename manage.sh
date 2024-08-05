@@ -78,7 +78,11 @@ usage() {
             details in their GitHub page:
                 https://github.com/python/mypy
         - mypy: Run Python typechecker.
-        - tsconfig: Create a new tsconfig files in the current directory.
+        - tsconfig: Creates a new tsconfig files in the current directory.
+        - node-save-prefix:
+            Saves npm/pnpm dependencies using exact version instead of variable
+            versions (depending on ^ or ~).
+        - add-tailwind: Adds TailwindCSS and DaisyUI to a project.
     " 4
 
 }
@@ -357,6 +361,35 @@ EOF
                 npx --package=typescript@5.5.4 -- tsc --init
                 return $?
 
+                ;; #}}}
+            node-save-prefix) #{{{
+                npm config set save-prefix=''
+                pnpm config set save-prefix=''
+                ;; #}}}
+            add-tailwind) #{{{
+                npm install -D tailwindcss postcss autoprefixer @tailwindcss/typography daisyui@latest
+                npx tailwindcss init -p
+                cat <<'EOF' > tailwind.config.js
+import daisyui from "daisyui";
+import twTypography from "@tailwindcss/typography";
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [daisyui, twTypography],
+  daisyui: {
+    themes: ["dracula", "dark", "light"],
+  },
+};
+EOF
+                cat <<'EOF' > src/index.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+EOF
                 ;; #}}}
             *) #{{{
                 # Put the next command above this line.
