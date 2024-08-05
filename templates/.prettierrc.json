@@ -20,7 +20,7 @@
 
         "astroAllowShorthand": true,
 
-        "importOrder": ["^[p]react", "<THIRD_PARTY_MODULES>", "^@/(.*)$", "^[./]"],
+        "importOrder": ["^(node|npm):", "<THIRD_PARTY_MODULES>", "^@/(.*)$", "^[./]"],
         "importOrderSeparation": true,
         "importOrderSortSpecifiers": true,
         "importOrderParserPlugins": ["typescript", "jsx", "importAssertions"],
@@ -29,4 +29,3 @@
     }
   ]
 }
-
