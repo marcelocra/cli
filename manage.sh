@@ -434,6 +434,9 @@ EOF
                     license-apache|lic-apache|apache)
                         template='LICENSE-apache.md'
                         ;;
+                    tsconfig|tsc)
+                        template='tsconfig.json'
+                        ;;
                     *)
                         mm_trim "
                             Couldn't find a template for that. Available templates:
@@ -447,6 +450,7 @@ EOF
                             - changelog (cl)
                             - license (lic)
                             - license-apache (lic-apache, apache)
+                            - tsconfig (tsc)
                         " 24 && false
                         return $?
                         ;;
