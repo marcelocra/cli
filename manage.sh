@@ -84,8 +84,9 @@ usage() {
             versions (depending on ^ or ~).
         - add-tailwind: Adds TailwindCSS and DaisyUI to a project.
         - new:
-            Expects a second argument, with the name of the file that should
-            be created. This file is copied from the 'root/templates'.
+            Expects a second argument, with the name of the file that should be
+            created. Templates are copied from the 'cli/templates'. To See all
+            available templates, run 'cli new help'.
     " 4
 
 }
@@ -437,7 +438,7 @@ EOF
                     tsconfig|tsc)
                         template='tsconfig.json'
                         ;;
-                    *)
+                    *|help|--help|-h)
                         mm_trim "
                             Couldn't find a template for that. Available templates:
 
