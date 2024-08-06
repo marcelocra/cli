@@ -1,0 +1,47 @@
+{
+  "name": "project-name",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "hellow": "echo 'hello world'"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "google"
+    ],
+    "plugins": [
+      "prettier"
+    ]
+  },
+  "prettier": {
+    "importOrder": [
+      "^(node|npm):",
+      "<THIRD_PARTY_MODULES>",
+      "^@/(.*)$",
+      "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
+    "plugins": [
+      "prettier-plugin-tailwindcss",
+      "@trivago/prettier-plugin-sort-imports"
+    ]
+  },
+  "engines": {
+    "node": ">= 20"
+  },
+  "engineStrict": true,
+  "author": {
+    "name": "Marcelo Almeida",
+    "email": "2532492+marcelocra@users.noreply.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcelocra/project-name"
+  }
+}

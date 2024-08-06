@@ -87,6 +87,8 @@ usage() {
             Expects a second argument, with the name of the file that should be
             created. Templates are copied from the 'cli/templates'. To See all
             available templates, run 'cli new help'.
+        - eslint-prettier:
+            Configure eslint and prettier in a new node project.
     " 4
 
 }
@@ -417,6 +419,9 @@ EOF
                     gitattributes|gita)
                         template='.gitattributes'
                         ;;
+                    gitignore|giti)
+                        template='.gitignore'
+                        ;;
                     editorconfig|ec)
                         template='.editorconfig'
                         ;;
@@ -445,6 +450,7 @@ EOF
                             (You can use the full name or the alias to create a file from them.)
 
                             - gitattributes (gita)
+                            - gitignore (giti)
                             - editorconfig (ec)
                             - eslintrc (eslint)
                             - prettierrc (prettier)
@@ -460,6 +466,20 @@ EOF
                 cp "$templates_dir/$template" "$template"
                 return $?
                 ;; #}}}
+            eslint-prettier)
+                cp "$this_file_directory/templates/package.json" "$PWD"
+
+                npm install -D \
+                    @trivago/prettier-plugin-sort-imports \
+                    eslint \
+                    eslint-config-google \
+                    eslint-config-prettier \
+                    prettier \
+                    prettier-plugin-tailwindcss \
+                    vite
+
+                return $?
+                ;;
             *) #{{{
                 # Put the next command above this line.
 
