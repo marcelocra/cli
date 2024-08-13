@@ -4,7 +4,21 @@
   "tools": {
     "fantomas": {
       "version": "6.3.10",
-      "commands": ["fantomas"]
+      "commands": [
+        "fantomas"
+      ]
+    },
+    "fsautocomplete": {
+      "version": "0.73.2",
+      "commands": [
+        "fsautocomplete"
+      ]
+    },
+    "fable": {
+      "version": "4.19.3",
+      "commands": [
+        "fable"
+      ]
     }
   }
 }

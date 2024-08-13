@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "See the LICENSE.txt file.",
   "scripts": {
     "hellow": "echo 'hello world'"
   },

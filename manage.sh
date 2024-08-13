@@ -61,7 +61,8 @@ usage() {
         - commonp: Edit personal shell helpers.
         - dartjs: Compile dart to js with level 2 of optimizations.
         - dotnet-publish:
-            Create a release self contained binary of a dotnet project.
+            Create a self contained release binary of a dotnet project.
+        - dotnet-tools: Installs helpfull dotnet tools.
         - compare-compilations: Compare the binary size of hello world programs.
         - install-protoc:
             Install protocol buffers compiler. For details and more information,
@@ -223,6 +224,28 @@ main() {
             dotnet-publish) #{{{
                 dotnet publish -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained true
                 return $?
+                ;; #}}}
+            dotnet-tools) #{{{
+
+                lfatal() {
+                    fatal "Failed to $1"
+                }
+
+                # Initialize local configuration file.
+                dotnet new tool-manifest || lfatal 'create tool-manifest'
+
+                # Formatter.
+                dotnet tool install fantomas || lfatal 'install fantomas'
+
+                # Autocomplete.
+                dotnet tool install fsautocomplete || lfatal 'install fsautocomplete'
+
+                # F# to JavaScript compiler.
+                dotnet tool install fable || lfatal 'install fable'
+
+                # Creates a .gitignore with common F# stuff.
+                dotnet new gitignore || lfatal 'create .gitignore'
+
                 ;; #}}}
             compare-compilations) #{{{
                 mm_trim '
