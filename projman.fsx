@@ -1,6 +1,6 @@
-(* {{{
-
-= ProjMan - A project manager.
+// vim:tw=100:ts=2:sw=2:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:
+(*
+= ProjMan - A project manager. {{{
 
 To use this program, you need https://fable.io[Fable].
 
@@ -96,7 +96,8 @@ let main() =
 main()
 ----
 
-}}} *)
+}}}
+*)
 
 #r "nuget: Fable.Node"
 #r "nuget: Fable.Core"

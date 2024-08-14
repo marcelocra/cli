@@ -227,24 +227,53 @@ main() {
                 ;; #}}}
             dotnet-tools) #{{{
 
-                lfatal() {
-                    fatal "Failed to $1"
-                }
-
                 # Initialize local configuration file.
-                dotnet new tool-manifest || lfatal 'create tool-manifest'
+                dotnet new tool-manifest
+
+                # Dependency manager.
+                dotnet tool install paket
+                dotnet tool restore
+
+                # Task runner.
+                dotnet tool install fake-cli
 
                 # Formatter.
-                dotnet tool install fantomas || lfatal 'install fantomas'
+                dotnet tool install fantomas
 
                 # Autocomplete.
-                dotnet tool install fsautocomplete || lfatal 'install fsautocomplete'
+                dotnet tool install fsautocomplete
 
                 # F# to JavaScript compiler.
-                dotnet tool install fable || lfatal 'install fable'
+                dotnet tool install fable
 
                 # Creates a .gitignore with common F# stuff.
-                dotnet new gitignore || lfatal 'create .gitignore'
+                dotnet new gitignore
+
+                mm_trim '
+                    Trying to setup paket with fsautocomplete, so you get
+                    autocomplete correctly in #r directives.
+
+                    If this fails, do the following:
+
+                    1) Find the full path of the `FSharp.DependencyManager.Paket.dll` in ~/.nuget.
+                    Usually, it will be something like:
+
+                        ~/.nuget/packages/fsharp.dependencymanager.paket/8.0.3/lib/netstandard2.0/FSharp.DependencyManager.Paket.dll
+
+                    2) Find the full path of the `fsautocomplete` directory in ~/.nuget. Usually,
+                    it will be something like:
+
+                        ~/.nuget/packages/fsautocomplete/0.73.2/tools/net8.0/any/
+
+                    3) Symlink 1 to 2.
+
+                    This assumes that you are using a local installation of `fsautocomplete`. For a
+                    global one, it is possible that the folders will be somewhere else.
+                ' 16
+                dotnet add package FSharp.DependencyManager.Paket
+                ln -s \
+                    $HOME/.nuget/packages/fsharp.dependencymanager.paket/8.0.3/lib/netstandard2.0/FSharp.DependencyManager.Paket.dll \
+                    $HOME/.nuget/packages/fsautocomplete/0.73.2/tools/net8.0/any/
 
                 ;; #}}}
             compare-compilations) #{{{
