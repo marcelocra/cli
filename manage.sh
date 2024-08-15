@@ -60,9 +60,9 @@ usage() {
         - common: Edit shell helpers.
         - commonp: Edit personal shell helpers.
         - dartjs: Compile dart to js with level 2 of optimizations.
-        - dotnet-publish:
-            Create a self contained release binary of a dotnet project.
-        - dotnet-tools: Installs helpfull dotnet tools.
+        - dotnet (alias: dn):
+            Provides a number of helpers for when developing using FSharp. Use
+            the 'help' command to see what is available.
         - compare-compilations: Compare the binary size of hello world programs.
         - install-protoc:
             Install protocol buffers compiler. For details and more information,
@@ -123,23 +123,6 @@ main() {
                 ;; #}}}
             cron) #{{{
                 crontab -e
-                ;; #}}}
-            fsharp) #{{{
-                if [ -z "$2" ]; then
-                    fatal 'Please, provide a name for the project: fsharp <project-name>'
-                fi
-
-                echo 'Creating a new fsharp F# project...'
-                mkdir "$2" && cd "$2" || fatal "Failed to create directory: $2"
-                dotnet new console -lang 'F#' || fatal 'Failed to create a new console program'
-
-                echo 'Adding gitignore and fantomas...'
-                dotnet new gitignore || fatal 'Failed to create .gitignore'
-                dotnet new tool-manifest || fatal 'Failed to create tool-manifest'
-                dotnet tool install fantomas || fatal 'Failed to install fantomas to project'
-
-                echo 'Done!'
-                return 0
                 ;; #}}}
             commitlint) #{{{
                 echo 'See full commitlint docs here:'
@@ -221,59 +204,210 @@ main() {
                 esac
                 return $?
                 ;; #}}}
-            dotnet-publish) #{{{
-                dotnet publish -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained true
+            dotnet|dn) #{{{
+                local cmd="$2"
+                usage() {
+                    mm_trim '
+                        Usage: cli dotnet[dn] <command>
+
+                        Commands:
+                            tools:
+                                Creates a new manifest and install the following
+                                tools (frequently used when writing an FSharp
+                                program that targets JavaScript: paket,
+                                fake-cli, fantomas, fsautocomplete, fable,
+                                femto.
+                            neovim (nvim|vim|vi):
+                                Lists all steps that we must follow to get
+                                (Neo)Vim to provide autocomplete for FSharp.
+                            publish:
+                                Creates a self contained release binary of a
+                                dotnet project.
+                            new:
+                                Creates a new FSharp project. Uses $PROJ_NAME
+                                to set the project name and $PROJ_TYPE to choose
+                                between console or classlib.
+                            solution (s|sol):
+                                Lists all commands used to manage solutions.
+                            help:
+                                Shows this message.
+                    ' 20
+                }
+                if [ -z "$cmd" ]; then
+                    usage
+                    fatal 'Error: no command provided.'
+                fi
+
+                case $cmd in
+                    tools) #{{{
+
+                        # Initialize local configuration file.
+                        dotnet new tool-manifest
+
+                        # Dependency manager.
+                        dotnet tool install paket
+                        dotnet tool restore
+
+                        # Task runner.
+                        dotnet tool install fake-cli
+
+                        # Formatter.
+                        dotnet tool install fantomas
+
+                        # Autocomplete.
+                        dotnet tool install fsautocomplete
+
+                        # F# to JavaScript compiler.
+                        dotnet tool install fable
+
+                        # F# JavaScript npm package manager.
+                        dotnet tool install femto
+
+                        # Creates a .gitignore with common F# stuff.
+                        dotnet new gitignore
+
+                        ;; #}}}
+                    neovim|nvim|vim|vi) #{{{
+                        # Uncomment this block or do what it suggests manually to
+                        # enable vim autocomplete for fsharp files with paket.
+                        mm_trim '
+                        To use FSharp with (Neo)Vim, install the Ionide vim
+                        plugin from https://github.com/ionide/Ionide-vim.
+
+                        You will need to install `fsautocomplete`, either
+                        locally to the project or globally. When installed
+                        locally, you need to update Vim settings to use the project tool, as described
+                        in its documentation:
+
+                            https://github.com/ionide/Ionide-vim?tab=readme-ov-file#set-the-path-to-fsac
+
+                        For `fsautocomplete` to recognize `paket` as a directive in `#r`, you also need
+                        to install the `FSharp.DependencyManager.Paket.dll` and copy/symlink it to `fsautocomplete`.
+                        To do that, I followed these steps:
+
+                        1) Install `FSharp.DependencyManager.Paket`:
+                            dotnet add package FSharp.DependencyManager.Paket
+                            or
+                            paket add FSharp.DependencyManager.Paket
+
+                        2) Find the full path for
+                        `FSharp.DependencyManager.Paket.dll` in ~/.nuget. Mine:
+
+                            ~/.nuget/packages/fsharp.dependencymanager.paket/8.0.3/lib/netstandard2.0/FSharp.DependencyManager.Paket.dll
+
+                        3) Find the full path of the `fsautocomplete` directory
+                        in ~/.nuget. Mine:
+
+                            ~/.nuget/packages/fsautocomplete/0.73.2/tools/net8.0/any/
+
+                        4) Symlink 2 to 3. (You can copy, instead, but I like to
+                        symlink.)
+
+                        ln -s \
+                            $HOME/.nuget/packages/fsharp.dependencymanager.paket/8.0.3/lib/netstandard2.0/FSharp.DependencyManager.Paket.dll \
+                            $HOME/.nuget/packages/fsautocomplete/0.73.2/tools/net8.0/any/
+
+                        I have not tested this with a global installation of
+                        `fsautocomplete`.
+                        ' 24
+                        ;; #}}}
+                    publish) #{{{
+                        dotnet publish -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true --self-contained true
+                        ;; #}}}
+                    new) #{{{
+                        local proj_type="${PROJ_TYPE:-console}"
+                        local proj_name="${PROJ_NAME:-fsharp-${PROJ_TYPE}-project}"
+                        local cli_cmd="cli dotnet new"
+
+                        if [ "$3" != "-y" ]; then
+                            mm_trim "
+                            Usage: $cli_cmd -y
+
+                            This command will create a new project (and folder)
+                            in the current directory (or reuse one, if it exists
+                            with the same path). Current configuration:
+
+                                Project name: $proj_name (\$PROJ_NAME)
+                                Project type: $proj_type (\$PROJ_TYPE)
+
+                            You can change that by providing those envs before
+                            calling this script. For example:
+
+                                \$PROJ_NAME=my-project $cli_cmd -y
+                            " 28
+                            fatal "'-y' not provided. Aborting."
+                        fi
+
+                        if [ ! -d "$proj_name" ]; then
+                            echo "Creating directory '$proj_name'..."
+                            mkdir -p "$proj_name" || fatal "Failed to create directory: $proj_name"
+                            echo 'Done!'
+                        fi
+
+                        cd "$proj_name" || fatal "Failte to enter path: $proj_name"
+
+                        echo "Creating a new F# $proj_type project..."
+                        if [ "$proj_type" = "console" ]; then
+                            dotnet new console -lang 'F#' || fatal 'failed'
+                        elif [ "$proj_type" = "classlib" ]; then
+                            dotnet new classlib -lang "F#" || fatal 'failed'
+                        else
+                            fatal "Invalid project type: $proj_type"
+                        fi
+
+                        echo 'Done!'
+                        return $?
+
+                        ;; #}}}
+                    solution|sol|s) #{{{
+
+                        mm_trim '
+                            Use the following commands to manage an FSharp multi-project solution.
+                            This is an example iteration:
+
+                            # Create a solution (multi-project project):
+                            dotnet new sln -o <solution name>
+
+                            # Create projects inside the solution. Console project:
+                            dotnet new console -lang "F#" -o src/App
+
+                            # Create a build console project too:
+                            dotnet new console -lang "F#" -o src/Build
+
+                            # Library project:
+                            dotnet new classlib -lang "F#" -o src/Library
+
+                            # Add internal projects to the solution (you can also remove, if
+                            # necessary, using the `remove` command):
+                            dotnet sln add src/App/App.fsproj
+                            dotnet sln add src/Library/Library.fsproj
+                            dotnet sln add src/Build/Build.fsproj
+
+                            # Add one project as a reference in the other, for example, if the App
+                            # uses the Library:
+                            dotnet add src/App/App.fsproj reference src/Library/Library.fsproj
+
+                            # Example build script, to use the Build project as a build tool:
+
+                                # Linux, in a .sh file:
+                                dotnet run --project ./build/Femto.Build.fsproj -- $1
+
+                                # Windows, in a .cmd file:
+                                dotnet run --project ./build/Femto.Build.fsproj -- %1
+
+                        ' 24
+
+                        ;; #}}}
+                    help) #{{{
+                        usage
+                        ;; #}}}
+                    *) #{{{
+                        usage
+                        fatal "Invalid command command: $cmd"
+                        ;; #}}}
+                esac
+
                 return $?
-                ;; #}}}
-            dotnet-tools) #{{{
-
-                # Initialize local configuration file.
-                dotnet new tool-manifest
-
-                # Dependency manager.
-                dotnet tool install paket
-                dotnet tool restore
-
-                # Task runner.
-                dotnet tool install fake-cli
-
-                # Formatter.
-                dotnet tool install fantomas
-
-                # Autocomplete.
-                dotnet tool install fsautocomplete
-
-                # F# to JavaScript compiler.
-                dotnet tool install fable
-
-                # Creates a .gitignore with common F# stuff.
-                dotnet new gitignore
-
-                mm_trim '
-                    Trying to setup paket with fsautocomplete, so you get
-                    autocomplete correctly in #r directives.
-
-                    If this fails, do the following:
-
-                    1) Find the full path of the `FSharp.DependencyManager.Paket.dll` in ~/.nuget.
-                    Usually, it will be something like:
-
-                        ~/.nuget/packages/fsharp.dependencymanager.paket/8.0.3/lib/netstandard2.0/FSharp.DependencyManager.Paket.dll
-
-                    2) Find the full path of the `fsautocomplete` directory in ~/.nuget. Usually,
-                    it will be something like:
-
-                        ~/.nuget/packages/fsautocomplete/0.73.2/tools/net8.0/any/
-
-                    3) Symlink 1 to 2.
-
-                    This assumes that you are using a local installation of `fsautocomplete`. For a
-                    global one, it is possible that the folders will be somewhere else.
-                ' 16
-                dotnet add package FSharp.DependencyManager.Paket
-                ln -s \
-                    $HOME/.nuget/packages/fsharp.dependencymanager.paket/8.0.3/lib/netstandard2.0/FSharp.DependencyManager.Paket.dll \
-                    $HOME/.nuget/packages/fsautocomplete/0.73.2/tools/net8.0/any/
 
                 ;; #}}}
             compare-compilations) #{{{
