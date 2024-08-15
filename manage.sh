@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# vim:fdm=marker:fmr={{{,}}}:fdl=0:fen:
+# vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:
 #
 # manage.sh - Script to manage the project.
 #
