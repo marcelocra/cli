@@ -487,13 +487,16 @@ EOF
                         template='CHANGELOG.md'
                         ;;
                     license|lic)
-                        template='LICENSE.md'
+                        template='LICENSE.txt'
                         ;;
                     license-apache|lic-apache|apache)
-                        template='LICENSE-apache.md'
+                        template='LICENSE-apache.txt'
                         ;;
                     tsconfig|tsc)
                         template='tsconfig.json'
+                        ;;
+                    package|pkg)
+                        template='package.json'
                         ;;
                     *|help|--help|-h)
                         mm_trim "
@@ -501,15 +504,18 @@ EOF
 
                             (You can use the full name or the alias to create a file from them.)
 
-                            - gitattributes (gita)
-                            - gitignore (giti)
-                            - editorconfig (ec)
-                            - eslintrc (eslint)
-                            - prettierrc (prettier)
-                            - changelog (cl)
-                            - license (lic)
-                            - license-apache (lic-apache, apache)
-                            - tsconfig (tsc)
+                            Template (alias)                      | File name
+                            ------------------------------------------------------------------------
+                            - gitattributes (gita)                | .gitattributes
+                            - gitignore (giti)                    | .gitignore
+                            - editorconfig (ec)                   | .editorconfig
+                            - eslintrc (eslint)                   | .eslintrc.json
+                            - prettierrc (prettier)               | .prettierrc.json
+                            - changelog (cl)                      | CHANGELOG.md
+                            - license (lic)                       | LICENSE.txt
+                            - license-apache (lic-apache, apache) | LICENSE-apache.txt
+                            - tsconfig (tsc)                      | tsconfig.json
+                            - package (pkg)                       | package.json
                         " 24 && false
                         return $?
                         ;;
