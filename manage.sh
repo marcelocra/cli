@@ -52,9 +52,6 @@ usage() {
         - edit: Edit this file using $EDITOR (alias: e, -e, --edit).
         - code: Edit this file using VSCode
         - cron: Open crontab file.
-        - fsharp:
-            Create an F# project preinstalled with Fantomas for source
-            formatting.
         - commitlint: Setup commit linting with husky and conventional commits.
         - pandoc: Print a pandoc man example command, with groff.
         - common: Edit shell helpers.
