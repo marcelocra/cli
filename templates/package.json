@@ -35,10 +35,13 @@
   },
   "prettier": {
     "importOrder": [
-      "^(node|npm):",
+      "^node:",
+      "^npm:",
+      "^jsr:",
       "<THIRD_PARTY_MODULES>",
       "^@/(.*)$",
-      "^[./]"
+      "^[./]",
+      "^[../]"
     ],
     "importOrderSeparation": true,
     "importOrderSortSpecifiers": true,
