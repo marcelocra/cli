@@ -226,6 +226,12 @@ main() {
                                 between console or classlib.
                             solution (s|sol):
                                 Lists all commands used to manage solutions.
+                            libs-node (node):
+                                Install Fable libs essential for Node
+                                development.
+                            libs-browser (browser):
+                                Install Fable libs essential for browser
+                                development.
                             help:
                                 Shows this message.
                     ' 20
@@ -394,6 +400,19 @@ main() {
 
                         ' 24
 
+                        ;; #}}}
+                    libs-node|node) #{{{
+                        dotnet paket add Fable.Core
+                        dotnet paket add Thoth.Json
+
+                        return $?
+                        ;; #}}}
+                    libs-browser|browser) #{{{
+                        dotnet paket add Fable.Browser.Dom
+                        dotnet paket add Fable.Elmish.React
+                        dotnet paket add Thoth.Json
+
+                        return $?
                         ;; #}}}
                     help) #{{{
                         usage
