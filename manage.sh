@@ -313,7 +313,7 @@ main() {
                         ;; #}}}
                     new) #{{{
                         local proj_type="${PROJ_TYPE:-console}"
-                        local proj_name="${PROJ_NAME:-fsharp-${PROJ_TYPE}-project}"
+                        local proj_name="${PROJ_NAME:-fsharp-${proj_type}-project}"
                         local cli_cmd="cli dotnet new"
 
                         if [ "$3" != "-y" ]; then
