@@ -648,6 +648,33 @@ EOF
                     package|pkg)
                         template='package.json'
                         ;;
+                    all)
+                        template='.gitattributes'
+                        cp "$templates_dir/$template" "$template"
+
+                        template='.gitignore'
+                        cp "$templates_dir/$template" "$template"
+
+                        template='.editorconfig'
+                        cp "$templates_dir/$template" "$template"
+
+                        template='CHANGELOG.md'
+                        cp "$templates_dir/$template" "$template"
+
+                        template='LICENSE.txt'
+                        cp "$templates_dir/$template" "$template"
+
+                        template='tsconfig.json'
+                        cp "$templates_dir/$template" "$template"
+
+                        template='package.json'
+                        cp "$templates_dir/$template" "$template"
+
+                        mkdir src
+
+                        return $?
+
+                        ;;
                     *|help|--help|-h)
                         mm_trim "
                             Couldn't find a template for that. Available templates:
@@ -666,6 +693,14 @@ EOF
                             - license-apache (lic-apache, apache) | LICENSE-apache.txt
                             - tsconfig (tsc)                      | tsconfig.json
                             - package (pkg)                       | package.json
+                            - all                                 | copy the following:
+                                                                  |   - .gitattributes
+                                                                  |   - .gitignore,
+                                                                  |   - .editorconfig
+                                                                  |   - CHANGELOG.md
+                                                                  |   - LICENSE.txt
+                                                                  |   - tsconfig.json
+                                                                  |   - package.json
                         " 24 && false
                         return $?
                         ;;
