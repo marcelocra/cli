@@ -12,18 +12,18 @@
     // "sourceMap": true,
     // "inlineSourceMap": true,
 
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
     "allowJs": true,
     "checkJs": true,
     "declaration": true,
-    "emitDeclarationOnly": true,
     "declarationDir": "./src/vendored",
+    "emitDeclarationOnly": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
+    "module": "Node16",
+    "moduleResolution": "Node16",
     "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2019",
     "types": [
       "node", // For Node.js
       "chrome-types" // For Chrome Extension development.
