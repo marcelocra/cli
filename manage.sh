@@ -675,6 +675,11 @@ EOF
                         return $?
 
                         ;;
+                    monorepo|mr)
+
+                        echo "prepare which files for a monorepo, as there's no need for eslint/prettier stuff, etc"
+
+                        ;;
                     *|help|--help|-h)
                         mm_trim "
                             Couldn't find a template for that. Available templates:
