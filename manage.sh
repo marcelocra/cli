@@ -81,6 +81,7 @@ usage() {
             Saves npm/pnpm dependencies using exact version instead of variable
             versions (depending on ^ or ~).
         - add-tailwind: Adds TailwindCSS and DaisyUI to a project.
+        - add-js-essentials: Adds essential JavaScript packages.
         - new:
             Expects a second argument, with the name of the file that should be
             created. Templates are copied from the 'cli/templates'. To See all
@@ -574,7 +575,11 @@ EOF
                 return $?
                 ;; #}}}
             add-tailwind) #{{{
-                ./scripts/add-tailwind.js
+                "$this_file_directory/scripts/add-tailwind.js"
+                return $?
+                ;; #}}}
+            add-js-essentials) #{{{
+                "$this_file_directory/scripts/add-js-essentials.js"
                 return $?
                 ;; #}}}
             integrate-prettier-with-eslint) #{{{
