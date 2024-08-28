@@ -1,6 +1,24 @@
-import path from "node:path";
 import fs from "node:fs";
+import path from "node:path";
+import process from "node:process";
 import { execSync } from "node:child_process";
+
+/** @type {string} */
+const PACKAGE_MANAGER = process.env.PACKAGE_MANAGER ?? 'npm'
+
+/** @type {{[key: 'npm'|'pnpm']: {install: string, uninstall: string, installDev: string}}} */
+const PM = {
+  npm: {
+    install: 'install',
+    installDev: 'install --save-dev',
+    uninstall: 'uninstall',
+  },
+  pnpm: {
+    install: 'add',
+    installDev: 'add -D',
+    uninstall: 'remove',
+  }
+}
 
 /** @type {string} */
 const __filename = new URL(import.meta.url).pathname;
@@ -38,7 +56,7 @@ export function npmInstall(packages, opts) {
   opts = { dev: false, ...opts };
 
   const packagesStr = typeof packages === "string" ? packages : packages.join(" ");
-  execSync(`npm install ${opts.dev ? "--save-dev" : "--save"} ${packagesStr}`, {
+  execSync(`${PACKAGE_MANAGER} ${opts.dev ? PM[PACKAGE_MANAGER].installDev : PM[PACKAGE_MANAGER].install} ${packagesStr}`, {
     stdio: "inherit",
   });
 }
