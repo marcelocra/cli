@@ -11,6 +11,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "0.5.14",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/node": "^20.14.5",
     "chrome-types": "^0.1.297",
     "daisyui": "^4.12.10",
     "esbuild": "0.23.0",
