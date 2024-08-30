@@ -1,0 +1,67 @@
+{
+  "name": "project-name",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "license": "See the LICENSE.txt file.",
+  "scripts": {
+    "hellow": "echo 'hello world'"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@tailwindcss/typography": "catalog:",
+    "@trivago/prettier-plugin-sort-imports": "catalog:",
+    "@types/node": "catalog:",
+    "chrome-types": "catalog:",
+    "daisyui": "catalog:",
+    "esbuild": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-google": "catalog:",
+    "eslint-config-prettier": "catalog:",
+    "marked": "catalog:",
+    "npm-run-all": "catalog:",
+    "prettier": "catalog:",
+    "prettier-plugin-tailwindcss": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "google"
+    ],
+    "plugins": [
+      "prettier"
+    ]
+  },
+  "prettier": {
+    "importOrder": [
+      "^node:",
+      "^npm:",
+      "^jsr:",
+      "<THIRD_PARTY_MODULES>",
+      "^@/(.*)$",
+      "^[./]",
+      "^[../]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
+    "plugins": [
+      "@trivago/prettier-plugin-sort-imports",
+      "prettier-plugin-tailwindcss"
+    ]
+  },
+  "engines": {
+    "node": ">= 20"
+  },
+  "engineStrict": true,
+  "author": {
+    "name": "Marcelo Almeida",
+    "email": "2532492+marcelocra@users.noreply.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcelocra/project-name"
+  }
+}
