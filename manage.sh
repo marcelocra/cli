@@ -109,7 +109,7 @@ main() {
 
     # Process command line arguments.
     while [ $# -gt 0 ]; do
-        case "$1" in
+        case "$1" in #{{{
             help|""|-h|--help) #{{{
                 usage
                 ;; #}}}
@@ -719,7 +719,7 @@ EOF
                 cp "$templates_dir/$template" "$template"
                 return $?
                 ;; #}}}
-            eslint-prettier)
+            eslint-prettier) #{{{
                 cp "$this_file_directory/templates/package.json" "$PWD"
 
                 npm install -D \
@@ -732,14 +732,14 @@ EOF
                     vite
 
                 return $?
-                ;;
+                ;; #}}}
             *) #{{{
                 # Put the next command above this line.
 
                 fatal "Unknown parameter passed: $1"
 
                 ;; #}}}
-        esac
+        esac #}}}
         shift
     done
 }
