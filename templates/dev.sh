@@ -1,25 +1,12 @@
-# vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen
 #!/usr/bin/env sh
+# vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:ft=sh
 #
 # A script to help manage the project during development.
 
-readonly CMD="${1:-dev}"
+usage() {
+    local cmd="$1"
 
-case "$CMD" in
-    dev)
-
-        echo 'TODO: add commands here to run in development mode'
-
-        ;;
-
-    release)
-
-        echo 'TODO: add commands here to prepare a release'
-
-        ;;
-
-    *)
-        cat <<EOF Usage: ./dev.sh [command=dev]
+    cat <<EOF Usage: ./dev.sh [command=dev]
 
 Options:
 
@@ -29,16 +16,29 @@ Options:
     release
         Produces a release.
 
-
-ERROR: Invalid command: '$CMD'
-
+ERROR: Invalid command: '$cmd'
 EOF
 
-        exit 1
+}
 
-        ;;
+main() {
+    local cmd="${1:-dev}"
 
-esac
+    case "$cmd" in
+        dev)
+            echo 'TODO: add commands here to run in development mode'
+            ;;
+        release)
+            echo 'TODO: add commands here to prepare a release'
+            ;;
+        *)
+            usage $cmd
+            return 1
+            ;;
+    esac
+    return 0
+}
 
-exit 0
+main "$@"
+
 
