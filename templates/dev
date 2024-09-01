@@ -21,16 +21,21 @@ EOF
 
 }
 
+dev() {
+    echo 'TODO: add commands here to run in development mode'
+}
+
+release() {
+    echo 'TODO: add commands here to prepare a release'
+}
+
 main() {
     local cmd="${1:-dev}"
+    shift
 
     case "$cmd" in
-        dev)
-            echo 'TODO: add commands here to run in development mode'
-            ;;
-        release)
-            echo 'TODO: add commands here to prepare a release'
-            ;;
+        dev) dev "$@" ;;
+        release) release "$@" ;;
         *)
             usage $cmd
             return 1
@@ -40,5 +45,3 @@ main() {
 }
 
 main "$@"
-
-

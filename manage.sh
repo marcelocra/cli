@@ -43,7 +43,7 @@ fi
 
 
 # All commands should be add here, along with description of how to use them.
-usage() {
+usage() { #{{{
     mm_trim "
     Usage: cli [command]
 
@@ -90,7 +90,7 @@ usage() {
             Configure eslint and prettier in a new node project.
     " 4
 
-}
+} #}}}
 
 
 if [ $# -eq 0 ]; then
@@ -109,7 +109,7 @@ main() {
 
     # Process command line arguments.
     while [ $# -gt 0 ]; do
-        case "$1" in #{{{
+        case "$1" in
             help|""|-h|--help) #{{{
                 usage
                 ;; #}}}
@@ -653,6 +653,9 @@ EOF
                     package|pkg)
                         template='package.json'
                         ;;
+                    dev)
+                        template='dev'
+                        ;;
                     all)
                         template='.gitattributes'
                         cp "$templates_dir/$template" "$template"
@@ -703,6 +706,7 @@ EOF
                             - license-apache (lic-apache, apache) | LICENSE-apache.txt
                             - tsconfig (tsc)                      | tsconfig.json
                             - package (pkg)                       | package.json
+                            - dev                                 | dev (script to help development)
                             - all                                 | copy the following:
                                                                   |   - .gitattributes
                                                                   |   - .gitignore,
@@ -739,7 +743,7 @@ EOF
                 fatal "Unknown parameter passed: $1"
 
                 ;; #}}}
-        esac #}}}
+        esac
         shift
     done
 }
