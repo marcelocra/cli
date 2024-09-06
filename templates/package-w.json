@@ -19,7 +19,7 @@
     "eslint-config-google": "catalog:",
     "eslint-config-prettier": "catalog:",
     "marked": "catalog:",
-    "npm-run-all": "catalog:",
+    "npm-run-all2": "catalog:",
     "prettier": "catalog:",
     "prettier-plugin-tailwindcss": "catalog:",
     "tailwindcss": "catalog:",
