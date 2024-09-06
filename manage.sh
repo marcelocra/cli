@@ -688,6 +688,11 @@ EOF
                         echo "prepare which files for a monorepo, as there's no need for eslint/prettier stuff, etc"
 
                         ;;
+                    manifest)
+
+                        template='manifest.json'
+
+                        ;;
                     *|help|--help|-h)
                         mm_trim "
                             Couldn't find a template for that. Available templates:
@@ -707,6 +712,9 @@ EOF
                             - tsconfig (tsc)                      | tsconfig.json
                             - package (pkg)                       | package.json
                             - dev                                 | dev (script to help development)
+                            - monorepo (mr)                       | [TODO] create files for a
+                                                                  |     monorepo project
+                            - manifest                            | chrome extension mv3 example
                             - all                                 | copy the following:
                                                                   |   - .gitattributes
                                                                   |   - .gitignore,
