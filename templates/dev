@@ -4,9 +4,7 @@
 # A script to help manage the project during development.
 
 usage() {
-    local cmd="$1"
-
-    cat <<EOF Usage: ./dev.sh [command=dev]
+    cat <<EOF Usage: ./dev [command=dev]
 
 Options:
 
@@ -16,7 +14,9 @@ Options:
     release
         Produces a release.
 
-ERROR: Invalid command: '$cmd'
+    help
+        Shows this message.
+
 EOF
 
 }
@@ -31,13 +31,17 @@ release() {
 
 main() {
     local cmd="${1:-dev}"
-    shift
+    if [ $# -gt 0 ]; then
+        shift
+    fi
 
     case "$cmd" in
         dev) dev "$@" ;;
         release) release "$@" ;;
+        help) usage; return 1 ;;
         *)
-            usage $cmd
+            usage
+            echo "ERROR: Invalid command: '$cmd'"
             return 1
             ;;
     esac
