@@ -88,6 +88,9 @@ usage() { #{{{
             available templates, run 'cli new help'.
         - eslint-prettier:
             Configure eslint and prettier in a new node project.
+        - install-essentials:
+            Install essential packages for a new OS installation.
+            Run 'cli install-essentials help' for more information.
     " 4
 
 } #}}}
@@ -210,11 +213,9 @@ main() {
 
                         Commands:
                             tools:
-                                Creates a new manifest and install the following
-                                tools (frequently used when writing an FSharp
-                                program that targets JavaScript: paket,
-                                fake-cli, fantomas, fsautocomplete, fable,
-                                femto.
+                                Creates a new manifest and install some
+                                frequently used packages (check the command for
+                                more details about the packages).
                             neovim (nvim|vim|vi):
                                 Lists all steps that we must follow to get
                                 (Neo)Vim to provide autocomplete for FSharp.
@@ -252,8 +253,8 @@ main() {
                         dotnet tool install paket
                         dotnet tool restore
 
-                        # Task runner.
-                        dotnet tool install fake-cli
+                        # Task runner. (Not using, so commented out.)
+                        # dotnet tool install fake-cli
 
                         # Formatter.
                         dotnet tool install fantomas
@@ -265,7 +266,8 @@ main() {
                         dotnet tool install fable
 
                         # F# JavaScript npm package manager.
-                        dotnet tool install femto
+                        # (Currently, I prefer to do this myself.
+                        # dotnet tool install femto
 
                         # Creates a .gitignore with common F# stuff.
                         dotnet new gitignore
@@ -744,6 +746,40 @@ EOF
                     vite
 
                 return $?
+                ;; #}}}
+            install-essentials) #{{{
+                if [ ! -d /home/linuxbrew/.linuxbrew ]; then
+                    echo 'Installing Homebrew...'
+                    /bin/bash -c \
+                        "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+                fi
+
+                # Recommended by brew itself, after installation.
+                brew install gcc
+
+                # Tools.
+                brew install neovim ripgrep tmux
+
+                # Suggestions by copilot.
+                # brew install \
+                #     bat \
+                #     deno \
+                #     fd \
+                #     fzf \
+                #     git \
+                #     htop \
+                #     jq \
+                #     neovim \
+                #     ripgrep \
+                #     tmux \
+                #     tree \
+                #     wget \
+                #     zsh
+
+
+                ;; #}}}
+            next-here) #{{{
+                echo 'duplicate this one and replace this'
                 ;; #}}}
             *) #{{{
                 # Put the next command above this line.
