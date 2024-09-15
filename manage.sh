@@ -689,6 +689,8 @@ EOF
 
                         echo "prepare which files for a monorepo, as there's no need for eslint/prettier stuff, etc"
 
+                        return 1
+
                         ;;
                     manifest)
 
