@@ -91,6 +91,17 @@ usage() { #{{{
         - install-essentials:
             Install essential packages for a new OS installation.
             Run 'cli install-essentials help' for more information.
+        - sri-hash:
+            Generates an SRI hash for a file or url. For more details, see here:
+            https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity#tools_for_generating_sri_hashes
+        - curl:
+            Uses 'curl' with predefined options that I won't remember:
+                curl -LO URL_HERE
+            -L: follow redirects
+            -O: save the retrieved file with the same name as in the server
+        - NEXT COMMAND HERE:
+            This is a placeholder command to allow me to search for 'next' and
+            get here. Add new commands before this one.
     " 4
 
 } #}}}
@@ -780,7 +791,48 @@ EOF
 
 
                 ;; #}}}
-            next-here) #{{{
+            curl) #{{{
+                local url="$2"
+                if [ -z "$url" ]; then
+                    echo "ERROR: second argument ($url) should be an URL."
+                    return 1
+                fi
+
+                curl -LO $url
+
+                return $?
+
+                ;; #}}}
+            sri-hash) #{{{
+                set -e
+
+                local file_or_url="$2"
+                local cmd="${3:-curl}"
+                local algorithm="${4:-sha384}"
+
+                if [ "$cmd" = "cat" ]; then
+                    if [ ! -f "$file_or_url" ]; then
+                        echo "ERROR: second argument ($file_or_url) should be a file."
+                        return 1
+                    fi
+
+                elif [ "$cmd" = "curl" ]; then
+                    if [ -z "$file_or_url" ]; then
+                        echo "ERROR: second argument ($file_or_url) should be an URL."
+                        return 1
+                    fi
+                else
+                    echo "ERROR: invalid command ($cmd). Must be 'curl' or 'cat'."
+                    return 1
+                fi
+
+                local the_hash="$($cmd $file_or_url | openssl dgst -$algorithm -binary | openssl base64 -A)"
+                echo "integrity=\"$algorithm-$the_hash\""
+
+                return $?
+
+                ;; #}}}
+            next-here|next-command-here) #{{{
                 echo 'duplicate this one and replace this'
                 ;; #}}}
             *) #{{{
