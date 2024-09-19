@@ -646,10 +646,10 @@ EOF
                         template='.editorconfig'
                         ;;
                     eslintrc|eslint)
-                        template='.eslintrc.json'
+                        template='eslint.config.js'
                         ;;
                     prettierrc|prettier)
-                        template='.prettierrc.json'
+                        template='prettier.config.js'
                         ;;
                     changelog|cl)
                         template='CHANGELOG.md'
