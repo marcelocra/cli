@@ -20,7 +20,7 @@
     "eslint": "catalog:",
     "eslint-config-google": "catalog:",
     "eslint-config-prettier": "catalog:",
-    "marked": "catalog:",
+    "mermaid": "catalog:",
     "npm-run-all2": "catalog:",
     "postcss": "catalog:",
     "prettier": "catalog:",
