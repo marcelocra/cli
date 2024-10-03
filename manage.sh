@@ -99,6 +99,8 @@ usage() { #{{{
                 curl -LO URL_HERE
             -L: follow redirects
             -O: save the retrieved file with the same name as in the server
+        - to-json-string:
+            Converts the input to a json string.
         - NEXT COMMAND HERE:
             This is a placeholder command to allow me to search for 'next' and
             get here. Add new commands before this one.
@@ -832,6 +834,22 @@ EOF
                 return $?
 
                 ;; #}}}
+            to-json-string)
+                shift
+
+                local file_to_run="$(mktemp)" && cat <<'EOF' > $file_to_run
+const strings = process.argv.slice(2)[0].split('\n')
+
+console.log(strings
+    .map(string => JSON.stringify(string))
+    .join(',\n'))
+EOF
+
+                local ret=$?
+
+                [ $ret ] && node $file_to_run "$@" || exit $ret
+
+                ;;
             next-here|next-command-here) #{{{
                 echo 'duplicate this one and replace this'
                 ;; #}}}
