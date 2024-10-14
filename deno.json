@@ -1,0 +1,16 @@
+{
+  "name": "@mcra/cli",
+  "version": "0.1.0",
+  "description": "Integrate with and simplify the command line usage: rename some functions, create files from templates, generate projects, etc.",
+  "exports": "./cli.ts",
+  "tasks": {
+    "prepare": "husky"
+  },
+  "imports": {
+    "@commitlint/cli": "npm:@commitlint/cli@^19.3.0",
+    "@commitlint/config-conventional": "npm:@commitlint/config-conventional@^19.2.2",
+    "husky": "npm:husky@^9.1.1",
+    "prettier": "npm:prettier@3.3.3"
+  },
+  "license": "Apache-2.0"
+}
