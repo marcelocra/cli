@@ -1,1 +1,9 @@
-npx --no -- commitlint --edit $1
+#!/usr/bin/env bash
+
+# Figure out how to use `deno run` to execute npm scripts directly, like `npx` does.
+# Previous command here was:
+#   npx --no -- commitlint --edit $1
+# I tried, but it didn't work:
+#   deno task commitlint
+# Also tried to create a deno task for that, but it didn't work:
+#   "commitlint": "commitlint --edit $1"
