@@ -29,23 +29,6 @@
     "typescript": "catalog:",
     "vite": "catalog:"
   },
-  "prettier": {
-    "importOrder": [
-      "^node:",
-      "^npm:",
-      "^jsr:",
-      "<THIRD_PARTY_MODULES>",
-      "^@/(.*)$",
-      "^[./]",
-      "^[../]"
-    ],
-    "importOrderSeparation": true,
-    "importOrderSortSpecifiers": true,
-    "plugins": [
-      "@trivago/prettier-plugin-sort-imports",
-      "prettier-plugin-tailwindcss"
-    ]
-  },
   "engines": {
     "node": ">= 20"
   },

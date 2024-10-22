@@ -672,9 +672,6 @@ EOF
                     tsconfig|tsc)
                         template='tsconfig.json'
                         ;;
-                    package|pkg)
-                        template='package.json'
-                        ;;
                     dev)
                         template='dev'
                         ;;
@@ -684,6 +681,7 @@ EOF
                     ws|pnpm-workspace)
                         template='pnpm-workspace.yaml'
                         ;;
+
                     monorepo|mr)
 
                         echo "prepare which files for a monorepo, as there's no need for eslint/prettier stuff, etc"
@@ -691,14 +689,46 @@ EOF
                         return 1
 
                         ;;
+                    package|pkg)
+                        cp "$templates_dir/package.json" "package.json"
+                        cp "$templates_dir/prettier.config.js" "prettier.config.js"
+                        cp "$templates_dir/eslint.config.js" "eslint.config.js"
+
+                        return $?
+                        ;;
                     package-c|pkg-c)
+                        # TODO: automatically update package.json with latest
+                        # version from pnpm-workspace.yaml's catalog.
                         cp "$templates_dir/package-catalog.json" "package.json"
+                        cp "$templates_dir/pnpm-workspace.yaml" "pnpm-workspace.yaml"
+                        cp "$templates_dir/prettier.config.js" "prettier.config.js"
+                        cp "$templates_dir/eslint.config.js" "eslint.config.js"
+
+                        return $?
+                        ;;
+                    package-tw|pkg-tw)
+                        cp "$templates_dir/package-tw.json" "package.json"
+                        cp "$templates_dir/prettier-tw.config.js" "prettier.config.js"
+                        cp "$templates_dir/tailwind+twTypography+daisyui.js" "tailwind.config.js"
+                        cp "$templates_dir/tailwind-index.css" "index.css"
+                        cp "$templates_dir/eslint.config.js" "eslint.config.js"
+
+                        return $?
+                        ;;
+                    prettierrc-tw|prettier-tw)
+                        cp "$templates_dir/prettier-tw.config.js" "prettier.config.js"
+
+                        return $?
                         ;;
                     twi|twi-css|tailwind-index-css)
                         cp "$templates_dir/tailwind-index.css" "index.css"
+
+                        return $?
                         ;;
                     twc|tw-config|tailwind-config)
                         cp "$templates_dir/tailwind+twTypography+daisyui.js" "tailwind.config.js"
+
+                        return $?
                         ;;
                     all)
                         template='.gitattributes'
@@ -744,13 +774,14 @@ EOF
                             - license (lic)                       | LICENSE.txt
                             - license-apache (lic-apache, apache) | LICENSE-apache.txt
                             - tsconfig (tsc)                      | tsconfig.json
-                            - package (pkg)                       | package.json (with versions)
+                            - package (pkg)                       | basic package.json w. versions
                             - dev                                 | dev (script to help development)
                             - manifest                            | manifest.json (Chrome Ext. v3)
                             - pnpm-workspace (ws)                 | pnpm-workspace.yaml
                             - monorepo (mr)                       | [TODO] create files for a
                                                                   |     monorepo project
-                            - package-c (pkg-c)                   | package.json (with 'catalog:')
+                            - package-c (pkg-c)                   | package.json with 'catalog:'
+                            - package-tw (pkg-tw)                 | package.json with tailwind
                             - tailwind-index-css (twi)            | tailwind base index.css file
                             - tailwind-config (twc)               | tailwind config file
                             - all                                 | copy the following:
@@ -762,6 +793,7 @@ EOF
                                                                   |   - tsconfig.json
                                                                   |   - package.json
                         " 24 && false
+
                         return $?
                         ;;
                 esac
