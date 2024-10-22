@@ -658,6 +658,13 @@ EOF
                         ;;
                     license|lic)
                         template='LICENSE.txt'
+                        file="$templates_dir/$template"
+                        echo 'Creating a new LICENSE.txt file in the current directory...'
+                        cat $file | sed -E -e `echo "s/YYYY/$(date '+%Y')/g"` > $template
+                        echo 'First 10 lines:'
+                        echo ''
+                        cat $template | head -n10 | sed -E -e 's/^/  |  /'
+                        return $?
                         ;;
                     license-apache|lic-apache|apache)
                         template='LICENSE-apache.txt'
@@ -718,8 +725,6 @@ EOF
                         mkdir src
 
                         return $?
-
-                        ;;
 
                         ;;
                     *|help|--help|-h)
