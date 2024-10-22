@@ -9,31 +9,25 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@eslint/js": "catalog:",
     "@tailwindcss/typography": "catalog:",
     "@trivago/prettier-plugin-sort-imports": "catalog:",
     "@types/node": "catalog:",
+    "autoprefixer": "catalog:",
     "chrome-types": "catalog:",
     "daisyui": "catalog:",
     "esbuild": "catalog:",
     "eslint": "catalog:",
     "eslint-config-google": "catalog:",
     "eslint-config-prettier": "catalog:",
-    "marked": "catalog:",
+    "mermaid": "catalog:",
     "npm-run-all2": "catalog:",
+    "postcss": "catalog:",
     "prettier": "catalog:",
     "prettier-plugin-tailwindcss": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"
-  },
-  "eslintConfig": {
-    "extends": [
-      "eslint:recommended",
-      "google"
-    ],
-    "plugins": [
-      "prettier"
-    ]
   },
   "prettier": {
     "importOrder": [

@@ -671,6 +671,28 @@ EOF
                     dev)
                         template='dev'
                         ;;
+                    manifest)
+                        template='manifest.json'
+                        ;;
+                    ws|pnpm-workspace)
+                        template='pnpm-workspace.yaml'
+                        ;;
+                    monorepo|mr)
+
+                        echo "prepare which files for a monorepo, as there's no need for eslint/prettier stuff, etc"
+
+                        return 1
+
+                        ;;
+                    package-c|pkg-c)
+                        cp "$templates_dir/package-catalog.json" "package.json"
+                        ;;
+                    twi|twi-css|tailwind-index-css)
+                        cp "$templates_dir/tailwind-index.css" "index.css"
+                        ;;
+                    twc|tw-config|tailwind-config)
+                        cp "$templates_dir/tailwind+twTypography+daisyui.js" "tailwind.config.js"
+                        ;;
                     all)
                         template='.gitattributes'
                         cp "$templates_dir/$template" "$template"
@@ -698,16 +720,6 @@ EOF
                         return $?
 
                         ;;
-                    monorepo|mr)
-
-                        echo "prepare which files for a monorepo, as there's no need for eslint/prettier stuff, etc"
-
-                        return 1
-
-                        ;;
-                    manifest)
-
-                        template='manifest.json'
 
                         ;;
                     *|help|--help|-h)
@@ -727,11 +739,15 @@ EOF
                             - license (lic)                       | LICENSE.txt
                             - license-apache (lic-apache, apache) | LICENSE-apache.txt
                             - tsconfig (tsc)                      | tsconfig.json
-                            - package (pkg)                       | package.json
+                            - package (pkg)                       | package.json (with versions)
                             - dev                                 | dev (script to help development)
+                            - manifest                            | manifest.json (Chrome Ext. v3)
+                            - pnpm-workspace (ws)                 | pnpm-workspace.yaml
                             - monorepo (mr)                       | [TODO] create files for a
                                                                   |     monorepo project
-                            - manifest                            | chrome extension mv3 example
+                            - package-c (pkg-c)                   | package.json (with 'catalog:')
+                            - tailwind-index-css (twi)            | tailwind base index.css file
+                            - tailwind-config (twc)               | tailwind config file
                             - all                                 | copy the following:
                                                                   |   - .gitattributes
                                                                   |   - .gitignore,
