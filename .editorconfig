@@ -1,1 +1,42 @@
-/home/marcelocra/.editorconfig
+# My preferred settings. Details and docs below.
+
+root = true
+
+[*]
+
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+end_of_line = lf
+charset = utf-8
+spelling_language = pt-BR
+max_line_length = 120
+
+[*.{py,sh,zsh,bash}]
+indent_size = 4
+max_line_length = 80
+
+[*.{fs,fsi,fsx,elm,lua}]
+indent_size = 4
+
+[*.{md,markdown}]
+# Let markdown lines run free! I do use visual wrapping in VSCode, though.
+max_line_length = unset
+
+#
+# Options
+# -------
+#
+#   root = true
+#
+#     EditorConfig looks for a file named `.editorconfig` in the directory of the current file and in every parent
+#     directory. If it finds one that has `root = true`, it will stop looking.
+#
+#   indent_style: space | tab
+#
+#     When using `tab`, `tab_width` can be used to set the actual width, like `indent_size`. For example:
+#     tab_width = 2
+#
+#     Note: Doesn't work in Sublime Text, as the main EditorConfig plugin doesn't implement it.
+#
