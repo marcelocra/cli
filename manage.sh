@@ -693,6 +693,7 @@ EOF
                         cp "$templates_dir/package.json" "package.json"
                         cp "$templates_dir/prettier.config.js" "prettier.config.js"
                         cp "$templates_dir/eslint.config.js" "eslint.config.js"
+                        cp "$templates_dir/.editorconfig" ".editorconfig"
 
                         return $?
                         ;;
@@ -703,6 +704,7 @@ EOF
                         cp "$templates_dir/pnpm-workspace.yaml" "pnpm-workspace.yaml"
                         cp "$templates_dir/prettier.config.js" "prettier.config.js"
                         cp "$templates_dir/eslint.config.js" "eslint.config.js"
+                        cp "$templates_dir/.editorconfig" ".editorconfig"
 
                         return $?
                         ;;
