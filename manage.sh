@@ -734,6 +734,7 @@ EOF
                         ;;
                     elm)
                         local templates=(
+                            'elm.json'
                             'eslint.config.js'
                             'index.html'
                             'main.ts'
