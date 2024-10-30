@@ -752,26 +752,19 @@ EOF
                         return $?
                         ;;
                     all|proj|project|full-project)
-                        template='.gitattributes'
-                        cp "$templates_dir/$template" "$template"
+                        local templates=(
+                            '.gitattributes'
+                            '.gitignore'
+                            '.editorconfig'
+                            'CHANGELOG.md'
+                            'LICENSE.txt'
+                            'tsconfig.json'
+                            'package.json'
+                        )
 
-                        template='.gitignore'
-                        cp "$templates_dir/$template" "$template"
-
-                        template='.editorconfig'
-                        cp "$templates_dir/$template" "$template"
-
-                        template='CHANGELOG.md'
-                        cp "$templates_dir/$template" "$template"
-
-                        template='LICENSE.txt'
-                        cp "$templates_dir/$template" "$template"
-
-                        template='tsconfig.json'
-                        cp "$templates_dir/$template" "$template"
-
-                        template='package.json'
-                        cp "$templates_dir/$template" "$template"
+                        for template in "${templates[@]}"; do
+                            cp "$templates_dir/$template" "$template"
+                        done
 
                         mkdir src
 
