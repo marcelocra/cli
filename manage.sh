@@ -732,7 +732,26 @@ EOF
 
                         return $?
                         ;;
-                    all)
+                    elm)
+                        local templates=(
+                            'eslint.config.js'
+                            'index.html'
+                            'main.ts'
+                            'package.json'
+                            'prettier.config.js'
+                            'vite.config.ts'
+                        )
+
+                        for template in "${templates[@]}"; do
+                            cp "$templates_dir/elm/$template" "$template"
+                        done
+
+                        mkdir src
+                        cp "$templates_dir/elm/src/Main.elm" "src/Main.elm"
+
+                        return $?
+                        ;;
+                    all|proj|project|full-project)
                         template='.gitattributes'
                         cp "$templates_dir/$template" "$template"
 
@@ -786,6 +805,7 @@ EOF
                             - package-tw (pkg-tw)                 | package.json with tailwind
                             - tailwind-index-css (twi)            | tailwind base index.css file
                             - tailwind-config (twc)               | tailwind config file
+                            - elm                                 | create an Elm project with Vite
                             - all                                 | copy the following:
                                                                   |   - .gitattributes
                                                                   |   - .gitignore,
