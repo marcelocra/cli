@@ -3,30 +3,10 @@
  * @type {import("prettier").Config}
  */
 const config = {
-  importOrder: [
-    "^node:",
-    "^npm:",
-    "^jsr:",
-    "<THIRD_PARTY_MODULES>",
-    "^@/(.*)$",
-    "^[./]",
-    "^[../]",
-  ],
+  importOrder: ["^node:", "^npm:", "^jsr:", "<THIRD_PARTY_MODULES>", "^@/(.*)$", "^[./]", "^[../]"],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
-  plugins: [
-    "@trivago/prettier-plugin-sort-imports",
-  ],
-  overrides: [
-    {
-      files: ["*.md"],
-      options: {
-        parser: "markdown",
-        proseWrap: "always",
-      },
-    },
-  ],
+  plugins: ["@trivago/prettier-plugin-sort-imports"],
 };
 
 export default config;
-
