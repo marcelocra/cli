@@ -18,12 +18,12 @@
     "declarationDir": "./src/vendored",
     "emitDeclarationOnly": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "Node16",
-    "moduleResolution": "Node16",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2019",
+    "target": "ESNext",
     "types": [
       "node", // For Node.js
       "chrome-types" // For Chrome Extension development.
