@@ -676,7 +676,78 @@ EOF
                         template='dev'
                         ;;
                     manifest)
-                        template='manifest.json'
+                        cp "$templates_dir/manifest.json" "manifest.json"
+
+                        mm_trim '
+                        Create the folders listed below, either directly (with
+                        mkdir) or using a generator for your favourite frontend
+                        framework. For example, to use Svelte and TypeScript for
+                        the popup page:
+
+                            mkdir -p src/pages/popup
+                            cd src/pages/popup
+                            pnpm create vite . --template svelte-ts
+
+                        You can run the command without the --template argument
+                        to create interactively, choosing the options:
+
+                            pnpm create vite .
+
+                        Available templates as of 17nov24 (see
+                        https://vite.dev/guide for up-to-date options):
+
+                          vanilla, vanilla-ts, vue, vue-ts, react, react-ts,
+                          react-swc, react-swc-ts, preact, preact-ts, lit,
+                          lit-ts, svelte, svelte-ts, solid, solid-ts, qwik,
+                          qwik-ts
+
+                        Folders you most likely will need:
+
+                            Pages:
+
+                                ./src/pages/popup
+                                ./src/pages/options
+
+                            Service worker and content script:
+
+                                ./src/service-worker
+                                ./src/content-script
+
+                            Assets (images):
+
+                                ./src/assets/images
+
+                            Releases:
+
+                                ./release (current release, for local testing)
+                                ./releases (each release zip, to upload in CWS)
+
+                            Executable scripts:
+
+                                ./bin
+
+                        INFO: This script created a ./manifest.json for you.
+
+                        ' 24
+
+                        # echo 'Creating folders...\nPages: ./src/pages/{popup|options}' \
+                        #     && mkdir -p src/pages/popup \
+                        #     && mkdir src/pages/options \
+                        #     && echo 'Done!\nService worker: ./src/service-worker' \
+                        #     && mkdir src/content-script \
+                        #     && echo 'Done!\nContent script: ./src/content-script' \
+                        #     && mkdir src/service-worker \
+                        #     && echo 'Done!\nAssets: ./src/assets/images' \
+                        #     && mkdir -p src/assets/images \
+                        #     && echo 'Done!\nFor releases: ./{release|releases}' \
+                        #     && mkdir release \
+                        #     && mkdir releases \
+                        #     && echo 'Done!\nFor executable scripts: ./bin' \
+                        #     && mkdir bin \
+                        #     && echo 'Done!\n\nYour code structure is ready, now you can go coding! Enjoy!!'
+
+                        return $?
+
                         ;;
                     ws|pnpm-workspace)
                         template='pnpm-workspace.yaml'

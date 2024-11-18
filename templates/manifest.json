@@ -3,45 +3,34 @@
   "version": "0.1.0",
   "name": "Chrome Extension manifest template",
   "description": "An example manifest with many of the available options.",
-  "permissions": ["activeTab", "contextMenus", "notifications", "storage", "sidePanel"],
+  "permissions": ["activeTab", "contextMenus", "notifications", "storage", "bookmarks"],
   "background": {
-    "service_worker": "./src/background/main.js",
+    "service_worker": "./src/service-worker/dist/index.js",
     "type": "module"
   },
   "action": {
-    "default_popup": "./src/pages/popup/index.html"
+    "default_popup": "./src/pages/popup/dist/index.html"
   },
-  "side_panel": {
-    "default_path": "./src/popup/index.html"
-  },
-  "options_page": "./src/pages/options/index.html",
-  "options_ui": {
-    "page": "./src/pages/options/index.html",
-    "open_in_tab": false
-  },
+  "options_page": "./src/pages/options/dist/index.html",
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "css": ["./src/content-scripts/all-urls/style.css"],
-      "js": ["./src/content-scripts/all-urls/main.js"]
-    },
-    {
-      "matches": ["https://*.google.com/*"],
-      "css": ["./src/content-scripts/google.com/style.css"],
-      "js": ["./src/content-scripts/google.com/main.js"]
+      "css": ["./src/content-script/styles.css"],
+      "js": ["./src/content-script/dist/index.js"]
     }
   ],
   "commands": {
-    "open-side-panel": {
+    "a-command-trigger": {
       "suggested_key": {
-        "default": "Alt+Shift+S"
+        "default": "Alt+Shift+N"
       },
-      "description": "Open the side panel for the extension."
+      "description": "This is a command description."
     },
     "_execute_action": {
       "suggested_key": {
         "default": "Alt+Shift+T"
-      }
+      },
+      "description": "Default keyboard shortcut (hotkey) for the extension."
     }
   },
   "icons": {
@@ -51,4 +40,3 @@
     "128": "./src/assets/images/icon128.png"
   }
 }
-
