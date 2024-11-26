@@ -1,0 +1,23 @@
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "denoland.vscode-deno",
+    "dracula-theme.theme-dracula",
+    "eamodio.gitlens",
+    "editorconfig.editorconfig",
+    "elmtooling.elm-ls-vscode",
+    "esbenp.prettier-vscode",
+    "github.copilot",
+    "github.copilot-chat",
+    "github.github-vscode-theme",
+    "hbenl.vscode-test-explorer",
+    "inlang.vs-code-extension",
+    "lokalise.i18n-ally",
+    "marcelocra.vscode-improved",
+    "ms-vscode.test-adapter-converter",
+    "sdras.night-owl",
+    "svelte.svelte-vscode",
+    "vscodevim.vim"
+  ]
+}
