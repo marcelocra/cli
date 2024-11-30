@@ -6,12 +6,13 @@
 # linguist-language=name     languages.yml         Highlighted and classified as name
 # linguist-vendored          vendor.yml            Excluded from stats
 
-# next linguist entry above
+generated*/**/* linguist-generated
+vendored*/**/* linguist-vendored
 
 # Git LFS
 # -------
-# Examples:
-# *.png filter=lfs diff=lfs merge=lfs -text
-# *.ico filter=lfs diff=lfs merge=lfs -text
 
-# next lfs entry above
+*.png filter=lfs diff=lfs merge=lfs -text
+*.ico filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
+
