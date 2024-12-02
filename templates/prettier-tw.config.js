@@ -7,6 +7,15 @@ const config = {
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
   plugins: ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
+  overrides: [
+    {
+      files: ["*.md"],
+      options: {
+        parser: "markdown",
+        proseWrap: "always",
+      },
+    },
+  ],
 };
 
 export default config;
