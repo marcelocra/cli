@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "type": "module",
   "private": true,
-  "license": "PLACEHOLDER_LICENSE",
+  "license": "See the license file.",
   "scripts": {
-    "__example::esbuild:node:dev": "esbuild ./main.ts --bundle --watch --sourcemap --format=esm --platform=node --outfile=main.js",
-    "__example::esbuild:node:prod": "esbuild ./main.ts --bundle --minify --format=esm --platform=node --outfile=main.js",
-    "__example::esbuild:browser": "# Remove `--platform=node` or change it to `browser` (default). For iife (default), remove `--format=esm` or change it to `iife`."
+    "esbuild:browser": "esbuild ./main.ts --bundle --format=esm --outfile=main.js",
+    "esbuild:node": "run-s 'esbuild:browser --platform=node'",
+    "dev": "run-s 'esbuild:node --watch --sourcemap'",
+    "prod": "run-s 'esbuild:node --minify'"
   },
   "dependencies": {},
   "devDependencies": {
